@@ -70,9 +70,10 @@ export default class ChatInfo extends SafeComponent {
                 <RecentFilesList collapsed={false} />
             </View>
         );
-        const rightIcon = icons.iconImage(
+        const rightIcon = icons.imageButton(
             chat.isFavorite ? pinOn : pinOff,
             () => chat.toggleFavoriteState(),
+            null,
             vars.opacity54
         );
         return (<LayoutModalExit

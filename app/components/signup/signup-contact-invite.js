@@ -133,7 +133,7 @@ export default class SignupContactInvite extends LoginWizardPage {
     header() {
         const leftIcon = icons.plain('search', vars.iconSize, vars.black12);
         const rightIcon = this.searchBarValue
-            ? icons.iconImage(iconClear, this.clearSearch, vars.opacity54)
+            ? icons.imageButton(iconClear, this.clearSearch, null, vars.opacity54)
             : null;
         return (
             <View>

@@ -177,8 +177,18 @@ const icons = {
         );
     },
 
-    iconImage(source, onPress, opacity) {
-        const width = vars.iconSize;
+    imageIcon(source, size) {
+        const width = size || vars.iconSize;
+        const height = width;
+        return (
+            <View pressRetentionOffset={vars.retentionOffset} >
+                <Image style={{ width, height }} source={source} />
+            </View>
+        );
+    },
+
+    imageButton(source, onPress, size, opacity) {
+        const width = size || vars.iconSize;
         const height = width;
         const padding = vars.iconPadding;
         return (
@@ -191,8 +201,8 @@ const icons = {
         );
     },
 
-    iconImageNoPadding(source, onPress, opacity) {
-        const width = vars.iconSize;
+    imageButtonNoPadding(source, size, onPress, opacity) {
+        const width = size || vars.iconSize;
         const height = width;
         return (
             <TouchableOpacity

@@ -91,7 +91,7 @@ export default class ChannelInfo extends SafeComponent {
                     <View style={containerStyle}>
                         {icon ?
                             icons.darkNoPadding(icon, action) :
-                            icons.iconImageNoPadding(image, action)}
+                            icons.imageButtonNoPadding(image, action)}
                         <Text style={{ marginLeft: vars.spacing.medium.maxi2x, color: vars.lighterBlackText }}>
                             {title}
                         </Text>

@@ -13,6 +13,8 @@ import PlusBorderIcon from '../layout/plus-border-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import uiState from '../layout/ui-state';
+import TopDrawer from '../shared/top-drawer';
+import icons from '../helpers/icons';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -48,6 +50,15 @@ export default class ContactList extends SafeComponent {
         return sections;
     }
 
+    topDrawer() {
+        return (<TopDrawer
+            headingText="Heading"
+            image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
+            descriptionText="Max 2 lines. Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+            buttonText="ButtonText"
+        />);
+    }
+
     listView() {
         return (
             <SectionList
@@ -57,6 +68,7 @@ export default class ContactList extends SafeComponent {
                 renderItem={this.item}
                 renderSectionHeader={this.header}
                 ref={this.scrollViewRef}
+                ListHeaderComponent={this.topDrawer()}
             />
         );
     }

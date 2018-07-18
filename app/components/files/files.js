@@ -22,6 +22,7 @@ import uiState from '../layout/ui-state';
 import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
+import TopDrawer from '../shared/top-drawer';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -118,6 +119,22 @@ export default class Files extends SafeComponent {
 
     keyExtractor = fsObject => fsObject ? (fsObject.fileId || fsObject.id) : null;
 
+    topDrawer() {
+        return (<TopDrawer
+            headingText="Heading"
+            image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
+            descriptionText="Max 2 lines. Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+            buttonText="ButtonText"
+        />);
+    }
+
+    pageHeader() {
+        return (<View>
+            {this.topDrawer()}
+            {this.searchTextbox()}
+        </View>);
+    }
+
     list() {
         return (
             <FlatList
@@ -130,6 +147,7 @@ export default class Files extends SafeComponent {
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={0.5}
                 ref={this.flatListRef}
+                ListHeaderComponent={this.pageHeader()}
             />
         );
     }
@@ -143,7 +161,7 @@ export default class Files extends SafeComponent {
         const s = {
             color: vars.txtMedium,
             textAlign: 'center',
-            marginTop: vars.headerSpacing
+            flex: 1
         };
         return <Text style={s}>{tx('title_noFilesInFolder')}</Text>;
     }
@@ -184,12 +202,13 @@ export default class Files extends SafeComponent {
         const leftIcon = icons.plain('search', vars.iconSize, vars.black12);
         let rightIcon = null;
         if (fileState.findFilesText) {
-            rightIcon = icons.iconImage(
+            rightIcon = icons.imageButton(
                 iconClear,
                 () => {
                     fileState.findFilesText = '';
                     this.onChangeFindFilesText('');
                 },
+                null,
                 vars.opacity54
             );
         }
@@ -262,9 +281,12 @@ export default class Files extends SafeComponent {
         if (this.data.length || !fileStore.folderStore.currentFolder.isRoot) return this.list();
         if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
             return (
-                <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
-                    {tx('title_noFilesMatchSearch')}
-                </Text>
+                <View>
+                    {this.pageHeader()}
+                    <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
+                        {tx('title_noFilesMatchSearch')}
+                    </Text>
+                </View>
             );
         }
         return this.isZeroState && <FilesPlaceholder />;
@@ -275,11 +297,10 @@ export default class Files extends SafeComponent {
             <View
                 style={{ flex: 1 }}>
                 <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
-                    {!this.isZeroState && this.searchTextbox()}
                     {upgradeForFiles()}
-                    {this.noFilesInFolder}
                     {/* this.sharedFolderRemovalNotifs() */}
                     {this.body()}
+                    {this.noFilesInFolder}
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
                 {this.toolbar()}
