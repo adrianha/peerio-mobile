@@ -15,7 +15,6 @@ class UIState extends RoutedState {
     @observable focusedTextBox = null;
     @observable picker = null;
     @observable pickerVisible = false;
-    @observable keyboardVisible = false;
     @observable keyboardHeight = 0;
     @observable locale = null;
     @observable pickerHeight = 200;

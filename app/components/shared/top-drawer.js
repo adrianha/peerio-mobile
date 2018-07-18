@@ -19,10 +19,7 @@ const headingStyle = {
     textAlign: 'center',
     width: '100%'
 };
-const imageStyle = {
-    marginTop: vars.spacing.small.midi2x,
-    marginBottom: vars.spacing.small.maxi2x
-};
+
 const descriptionStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.textBlack54,
@@ -74,9 +71,7 @@ export default class TopDrawer extends SafeComponent {
         return preferenceStore.prefs.showTopDrawer && (uiState.keyboardHeight === 0) ? (
             <Animated.View style={container}>
                 <Text semibold style={headingStyle}>{headingText}</Text>
-                <View style={imageStyle}>
-                    {image}
-                </View>
+                {image}
                 <Text numberOfLines={2} style={descriptionStyle}>{descriptionText}</Text>
                 {buttons.blueTextButton(buttonText, buttonAction, null, null, buttonText)}
                 <View style={iconStyle}>

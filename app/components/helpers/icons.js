@@ -180,8 +180,9 @@ const icons = {
     imageIcon(source, size) {
         const width = size || vars.iconSize;
         const height = width;
+        const padding = vars.iconPadding;
         return (
-            <View pressRetentionOffset={vars.retentionOffset} >
+            <View style={{ padding }} pressRetentionOffset={vars.retentionOffset} >
                 <Image style={{ width, height }} source={source} />
             </View>
         );

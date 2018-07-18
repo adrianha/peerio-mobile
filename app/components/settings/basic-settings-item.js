@@ -15,8 +15,8 @@ const itemContainerStyle = {
     alignItems: 'center',
     backgroundColor: 'white',
     paddingLeft: vars.spacing.small.maxi2x,
-    paddingVertical: vars.spacing.medium.mini2x,
     marginBottom: vars.spacing.small.mini,
+    minHeight: vars.settingsItemHeight,
     borderRadius: 4
 };
 
@@ -26,54 +26,45 @@ const descriptionStyle = {
 };
 
 @observer
-export default class SettingsItem extends SafeComponent {
-    press() { this.props.onPress && this.props.onPress(); }
-
-    get leftComponent() {
-        return this.props.leftComponent !== null ?
-            this.props.leftComponent
-            : null;
+export default class BasicSettingsItem extends SafeComponent {
+    press() {
+        // console.log('settings-item.js: press');
+        this.props.onPress && this.props.onPress();
     }
 
     get rightIcon() {
-        return this.props.rightIcon !== null ?
-            icons.darkNoPadding(this.props.rightIcon || 'keyboard-arrow-right', null,
-                { paddingLeft: vars.spacing.small.mini2x, paddingRight: vars.iconPadding })
+        return this.props.icon !== null ?
+            icons.dark(this.props.icon || 'keyboard-arrow-right')
             : null;
     }
 
     renderThrow() {
-        const { disabled, title, untappable, description, children, large, semibold } = this.props;
+        const { title, description, disabled, untappable, children, rightIcon } = this.props;
         const titleStyle = {
             color: disabled ? vars.txtLightGrey : vars.txtDark,
-            fontSize: vars.font.size.bigger
+            fontSize: vars.font.size.normal
         };
         const offset = vars.retentionOffset;
-        const height = large ? vars.largeSettingsItemHeight : vars.settingsItemHeight;
-        const marginLeft = this.leftComponent ? vars.spacing.huge.mini2x : 0;
         return (
             <TouchableOpacity
                 {...testLabel(title)}
                 activeOpacity={untappable ? 1 : 0.3}
                 pressRetentionOffset={offset}
                 onPress={() => !untappable && !disabled && this.press()}>
-                <View style={[itemContainerStyle, { height }]} pointerEvents={untappable ? undefined : 'none'}>
-                    <View style={{ flexGrow: 1, flexShrink: 1, marginLeft }}>
-                        <Text semibold={semibold} style={titleStyle}>
+                <View style={itemContainerStyle} pointerEvents={untappable ? undefined : 'none'}>
+                    <View style={{ flexGrow: 1, flexShrink: 1 }}>
+                        <Text style={titleStyle}>
                             {t(title)}
                         </Text>
                         {!!description && <Text style={descriptionStyle}>
-                            {description}
+                            {description}d
                         </Text>}
                     </View>
-                    <View style={{ position: 'absolute', left: 0, flex: 0 }}>
-                        {this.leftComponent}
-                    </View>
-                    <View style={{ flex: 0, justifyContent: 'center' }}>
+                    <View style={{ flex: 0 }}>
                         {children}
                     </View>
                     <View style={{ flex: 0 }}>
-                        {this.rightIcon}
+                        {rightIcon}
                     </View>
                 </View>
             </TouchableOpacity>
@@ -81,13 +72,12 @@ export default class SettingsItem extends SafeComponent {
     }
 }
 
-SettingsItem.propTypes = {
+BasicSettingsItem.propTypes = {
     children: PropTypes.any,
     title: PropTypes.any,
     description: PropTypes.any,
     disabled: PropTypes.bool,
     untappable: PropTypes.bool,
-    rightIcon: PropTypes.any,
-    leftComponent: PropTypes.any,
+    icon: PropTypes.string,
     onPress: PropTypes.any
 };
