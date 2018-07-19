@@ -182,7 +182,7 @@ const icons = {
         const height = width;
         const padding = vars.iconPadding;
         return (
-            <View style={{ padding }} pressRetentionOffset={vars.retentionOffset} >
+            <View style={{ padding }}>
                 <Image style={{ width, height }} source={source} />
             </View>
         );
