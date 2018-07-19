@@ -4,7 +4,7 @@ import { View, Animated, FlatList } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
-import FilesPlaceholder from './files-placeholder';
+import FilesZeroStatePlaceholder from './files-zero-state-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileUploadActionSheet from './file-upload-action-sheet';
@@ -289,7 +289,7 @@ export default class Files extends SafeComponent {
                 </View>
             );
         }
-        return this.isZeroState && <FilesPlaceholder />;
+        return this.isZeroState && <FilesZeroStatePlaceholder />;
     }
 
     renderThrow() {

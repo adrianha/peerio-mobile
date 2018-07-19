@@ -48,6 +48,10 @@ export default class TopDrawer extends SafeComponent {
         }, true);
     }
 
+    get topDrawerVisible() {
+        return preferenceStore.prefs.showTopDrawer && (uiState.keyboardHeight === 0);
+    }
+
     componentWillUnmount() {
         this.reaction && this.reaction();
         this.reaction = null;
@@ -66,9 +70,11 @@ export default class TopDrawer extends SafeComponent {
                 { translateY: this.animated }
             ],
             alignItems: 'center',
-            marginBottom: vars.spacing.small.mini2x
+            paddingBottom: vars.spacing.small.mini2x,
+            borderBottomColor: vars.black12,
+            borderBottomWidth: 1
         };
-        return preferenceStore.prefs.showTopDrawer && (uiState.keyboardHeight === 0) ? (
+        return this.topDrawerVisible ? (
             <Animated.View style={container}>
                 <Text semibold style={headingStyle}>{headingText}</Text>
                 {image}
