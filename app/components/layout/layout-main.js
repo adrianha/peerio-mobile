@@ -17,7 +17,7 @@ import { common } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
 import CustomOverlay from './custom-overlay';
-import MockTopDrawer from '../mocks/mock-top-drawer';
+import { topDrawerMaintenance } from '../shared/top-drawer-components';
 
 const { height } = Dimensions.get('window');
 
@@ -74,7 +74,7 @@ export default class LayoutMain extends SafeComponent {
                 <SnackBarConnection />
                 <View
                     style={{ flex: 1, flexGrow: 1 }}>
-                    <MockTopDrawer />
+                    {topDrawerMaintenance()}
                     {currentPage}
                     <Bottom>
                         <CustomOverlay />

@@ -118,12 +118,6 @@ export default class Files extends SafeComponent {
 
     keyExtractor = fsObject => fsObject ? (fsObject.fileId || fsObject.id) : null;
 
-    get pageHeader() {
-        return (<View>
-            {this.searchTextbox()}
-        </View>);
-    }
-
     list() {
         return (
             <FlatList
@@ -136,7 +130,6 @@ export default class Files extends SafeComponent {
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={0.5}
                 ref={this.flatListRef}
-                ListHeaderComponent={this.pageHeader}
             />
         );
     }
@@ -150,7 +143,7 @@ export default class Files extends SafeComponent {
         const s = {
             color: vars.txtMedium,
             textAlign: 'center',
-            flex: 1
+            marginTop: vars.headerSpacing
         };
         return <Text style={s}>{tx('title_noFilesInFolder')}</Text>;
     }
@@ -270,12 +263,9 @@ export default class Files extends SafeComponent {
         if (this.data.length || !fileStore.folderStore.currentFolder.isRoot) return this.list();
         if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
             return (
-                <View>
-                    {this.pageHeader}
-                    <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
-                        {tx('title_noFilesMatchSearch')}
-                    </Text>
-                </View>
+                <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
+                    {tx('title_noFilesMatchSearch')}
+                </Text>
             );
         }
         return this.isZeroState && <FilesZeroStatePlaceholder />;
@@ -286,10 +276,11 @@ export default class Files extends SafeComponent {
             <View
                 style={{ flex: 1 }}>
                 <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
+                    {!this.isZeroState && this.searchTextbox()}
                     {upgradeForFiles()}
+                    {this.noFilesInFolder}
                     {/* this.sharedFolderRemovalNotifs() */}
                     {this.body()}
-                    {this.noFilesInFolder}
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
                 {this.toolbar()}

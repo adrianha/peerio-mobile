@@ -18,11 +18,13 @@ const headingStyle = {
     textAlign: 'center',
     width: '100%'
 };
-
+const descriptionContainer = {
+    marginBottom: vars.spacing.small.midi2x,
+    width: '100%'
+};
 const descriptionStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.textBlack54,
-    marginBottom: vars.spacing.small.midi2x,
     paddingHorizontal: vars.spacing.huge.mini2x,
     textAlign: 'center',
     width: '100%'
@@ -39,14 +41,13 @@ export default class TopDrawer extends SafeComponent {
     @observable hide = false;
 
     componentDidMount() {
-        console.log(`componentDidMount`);
         const duration = 400;
         global.testAnimated = this.animated;
         global.Animated = Animated;
         this.reaction = reaction(() => this.topDrawerVisible, visible => {
             const toValue = visible ? vars.topDrawerHeight : 0;
             Animated.timing(this.animated, {
-                toValue, duration // , useNativeDriver: true
+                toValue, duration
             }).start(() => {
                 this.animated.setValue(toValue);
             });
@@ -67,7 +68,7 @@ export default class TopDrawer extends SafeComponent {
     }
 
     renderThrow() {
-        const { headingText, image, descriptionText, buttonText, buttonAction } = this.props;
+        const { heading, image, descriptionLine1, descriptionLine2, buttonText, buttonAction } = this.props;
         const outerContiner = {
             height: this.animated,
             overflow: 'hidden'
@@ -82,9 +83,12 @@ export default class TopDrawer extends SafeComponent {
         return (
             <Animated.View style={outerContiner}>
                 <View style={container}>
-                    <Text semibold style={headingStyle}>{headingText}</Text>
+                    <Text semibold style={headingStyle}>{heading}</Text>
                     {image}
-                    <Text numberOfLines={2} style={descriptionStyle}>{descriptionText}</Text>
+                    <View style={descriptionContainer}>
+                        <Text numberOfLines={2} style={descriptionStyle}>{descriptionLine1}</Text>
+                        {descriptionLine2 && <Text numberOfLines={1} style={descriptionStyle}>{descriptionLine2}</Text>}
+                    </View>
                     {buttons.blueTextButton(buttonText, buttonAction, null, null, buttonText)}
                     <View style={iconStyle}>
                         {icons.darkNoPadding('close', this.onClose)}
@@ -96,10 +100,11 @@ export default class TopDrawer extends SafeComponent {
 }
 
 TopDrawer.PropTypes = {
-    headingText: PropTypes.string.isRequired,
-    image: PropTypes.any.isRequired,
-    descriptionText: PropTypes.string.isRequired,
+    heading: PropTypes.string.isRequired,
+    image: PropTypes.any,
+    descriptionLine1: PropTypes.string.isRequired,
+    descriptionLine2: PropTypes.string,
     buttonText: PropTypes.string.isRequired,
-    buttonAction: PropTypes.func.isRequired
+    buttonAction: PropTypes.func
 };
 
