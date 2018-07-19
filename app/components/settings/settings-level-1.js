@@ -80,7 +80,7 @@ export default class SettingsLevel1 extends SafeComponent {
         clientApp.uiUserPrefs.externalContentConsented = false;
     };
 
-    topDrawer() {
+    get topDrawer() {
         return (<TopDrawer
             headingText="Heading"
             image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
@@ -108,7 +108,7 @@ export default class SettingsLevel1 extends SafeComponent {
         return (
             <View style={bgStyle}>
                 <ScrollView {...scrollHelper}>
-                    {this.topDrawer()}
+                    {this.topDrawer}
                     <View style={containerStyle}>
                         <SettingsItem title={User.current.fullName} description={User.current.username} rightIcon={null} semibold large
                             onPress={() => settingsState.transition('profile')}

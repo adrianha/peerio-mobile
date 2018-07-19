@@ -119,7 +119,7 @@ export default class Files extends SafeComponent {
 
     keyExtractor = fsObject => fsObject ? (fsObject.fileId || fsObject.id) : null;
 
-    topDrawer() {
+    get topDrawer() {
         return (<TopDrawer
             headingText="Heading"
             image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
@@ -128,9 +128,9 @@ export default class Files extends SafeComponent {
         />);
     }
 
-    pageHeader() {
+    get pageHeader() {
         return (<View>
-            {this.topDrawer()}
+            {this.topDrawer}
             {this.searchTextbox()}
         </View>);
     }
@@ -147,7 +147,7 @@ export default class Files extends SafeComponent {
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={0.5}
                 ref={this.flatListRef}
-                ListHeaderComponent={this.pageHeader()}
+                ListHeaderComponent={this.pageHeader}
             />
         );
     }
@@ -282,7 +282,7 @@ export default class Files extends SafeComponent {
         if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
             return (
                 <View>
-                    {this.pageHeader()}
+                    {this.pageHeader}
                     <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
                         {tx('title_noFilesMatchSearch')}
                     </Text>

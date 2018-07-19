@@ -50,7 +50,7 @@ export default class ContactList extends SafeComponent {
         return sections;
     }
 
-    topDrawer() {
+    get topDrawer() {
         return (<TopDrawer
             headingText="Heading"
             image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
@@ -68,7 +68,7 @@ export default class ContactList extends SafeComponent {
                 renderItem={this.item}
                 renderSectionHeader={this.header}
                 ref={this.scrollViewRef}
-                ListHeaderComponent={this.topDrawer()}
+                ListHeaderComponent={this.topDrawer}
             />
         );
     }

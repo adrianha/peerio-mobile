@@ -242,7 +242,7 @@ export default class ChatList extends SafeComponent {
         getSectionHeaderHeight: () => vars.chatListItemHeight
     });
 
-    topDrawer() {
+    get topDrawer() {
         return (<TopDrawer
             headingText="Heading"
             image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
@@ -267,7 +267,7 @@ export default class ChatList extends SafeComponent {
                 stickySectionHeadersEnabled={false}
                 keyExtractor={this.keyExtractor}
                 viewabilityConfig={viewabilityConfig}
-                ListHeaderComponent={this.topDrawer()}
+                ListHeaderComponent={this.topDrawer}
                 // {...scrollHelper} TODO removed temporarily because it breaks unread message indicator
             />
         );
