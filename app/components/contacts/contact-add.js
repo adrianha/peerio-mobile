@@ -232,10 +232,8 @@ export default class ContactAdd extends SafeComponent {
                     style={{ backgroundColor: vars.darkBlueBackground05 }}
                     ref={ref => { this._scrollView = ref; }}>
                     <View style={{ marginTop: vars.spacing.medium.midi2x }}>
-                        {contactState.empty && <View style={{ marginVertical: vars.spacing.small.midi2x, marginHorizontal: vars.spacing.medium.midi }}>
-                            <Text style={{ color: vars.txtDark }}>
-                                {tx('title_contactZeroState')}
-                            </Text>
+                        {contactState.empty && <View style={{ margin: vars.spacing.small.midi2x }}>
+                            <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
                         </View>}
                         <View style={{ marginRight: vars.spacing.small.midi2x }}>
                             <whiteLabelComponents.ContactAddWarning />
