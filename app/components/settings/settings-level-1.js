@@ -14,7 +14,6 @@ import { warnings, clientApp, User, contactStore } from '../../lib/icebear';
 import { popupAbout, popupInputCancel } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
 import { scrollHelper } from '../helpers/test-helper';
-import TopDrawer from '../shared/top-drawer';
 import icons from '../helpers/icons';
 import AvatarCircle from '../shared/avatar-circle';
 import PaymentStorageUsageItem from '../payments/payments-storage-usage-item';
@@ -25,7 +24,7 @@ const bgStyle = {
     backgroundColor: vars.darkBlueBackground05
 };
 
-const containerStyle = {
+const svStyle = {
     padding: vars.settingsListPadding
 };
 
@@ -80,15 +79,6 @@ export default class SettingsLevel1 extends SafeComponent {
         clientApp.uiUserPrefs.externalContentConsented = false;
     };
 
-    get topDrawer() {
-        return (<TopDrawer
-            headingText="Heading"
-            image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
-            descriptionText="Max 2 lines. Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-            buttonText="ButtonText"
-        />);
-    }
-
     /**
      * Scroll helper is used to provide scrolling capability
      * to the test script. Note that it overrides ref and onScroll
@@ -107,72 +97,69 @@ export default class SettingsLevel1 extends SafeComponent {
             </SettingsItem>);
         return (
             <View style={bgStyle}>
-                <ScrollView {...scrollHelper}>
-                    {this.topDrawer}
-                    <View style={containerStyle}>
-                        <SettingsItem title={User.current.fullName} description={User.current.username} rightIcon={null} semibold large
-                            onPress={() => settingsState.transition('profile')}
-                            leftComponent={this.avatarCircle} />
-                        {this.spacer}
+                <ScrollView contentContainerStyle={svStyle} {...scrollHelper}>
+                    <SettingsItem title={User.current.fullName} description={User.current.username} rightIcon={null} semibold large
+                        onPress={() => settingsState.transition('profile')}
+                        leftComponent={this.avatarCircle} />
+                    {this.spacer}
 
-                        <SettingsItem title="title_settingsProfile"
-                            onPress={() => settingsState.transition('profile')}
-                            leftComponent={this.leftSettingsImageIcon(require('../../assets/icons/public-profile-active.png'))} />
-                        <SettingsItem title="title_settingsSecurity"
-                            onPress={() => settingsState.transition('security')}
-                            leftComponent={this.leftSettingsIcon('security', vars.yellow)} />
-                        <SettingsItem title="title_settingsPreferences"
-                            onPress={() => settingsState.transition('preferences')}
-                            leftComponent={this.leftSettingsImageIcon(require('../../assets/icons/preferences-active.png'))} />
-                        {this.spacer}
+                    <SettingsItem title="title_settingsProfile"
+                        onPress={() => settingsState.transition('profile')}
+                        leftComponent={this.leftSettingsImageIcon(require('../../assets/icons/public-profile-active.png'))} />
+                    <SettingsItem title="title_settingsSecurity"
+                        onPress={() => settingsState.transition('security')}
+                        leftComponent={this.leftSettingsIcon('security', vars.yellow)} />
+                    <SettingsItem title="title_settingsPreferences"
+                        onPress={() => settingsState.transition('preferences')}
+                        leftComponent={this.leftSettingsImageIcon(require('../../assets/icons/preferences-active.png'))} />
+                    {this.spacer}
 
-                        <SettingsItem title="title_settingsAccount"
-                            onPress={() => settingsState.transition('account')}
-                            leftComponent={this.leftSettingsIcon('account-circle', vars.accountSettingsIconColor)} />
-                        {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
-                        {this.spacer}
+                    <SettingsItem title="title_settingsAccount"
+                        onPress={() => settingsState.transition('account')}
+                        leftComponent={this.leftSettingsIcon('account-circle', vars.accountSettingsIconColor)} />
+                    {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
+                    {this.spacer}
 
-                        <SettingsItem title="title_About"
-                            icon={null} onPress={() => popupAbout()}
-                            leftComponent={this.leftSettingsIcon('info', vars.peerioTeal)} />
-                        <SettingsItem title="title_help"
-                            onPress={() => settingsState.transition('logs')}
-                            leftComponent={this.leftSettingsIcon('help', vars.helpSettingsIconColor)} />
+                    <SettingsItem title="title_About"
+                        icon={null} onPress={() => popupAbout()}
+                        leftComponent={this.leftSettingsIcon('info', vars.peerioTeal)} />
+                    <SettingsItem title="title_help"
+                        onPress={() => settingsState.transition('logs')}
+                        leftComponent={this.leftSettingsIcon('help', vars.helpSettingsIconColor)} />
 
-                        <PaymentStorageUsageItem />
+                    <PaymentStorageUsageItem />
 
-                        <ButtonWithIcon
-                            text={tu('button_logout')}
-                            accessibilityLabel="button_logout"
-                            style={{
-                                backgroundColor: vars.signoutSettingsButtonBg,
-                                width: '100%',
-                                paddingVertical: vars.spacing.medium.mini2x,
-                                borderRadius: 4
-                            }}
-                            bold
-                            color={vars.red}
-                            textStyle={{ color: vars.peerioBlue }}
-                            onPress={loginState.signOut}
-                            iconName="power-settings-new"
-                            testID="button_signOut"
-                        />
-                        {this.spacer}
-                        {__DEV__ && <BasicSettingsItem title="silent invite" onPress={this.testSilentInvite} />}
-                        {__DEV__ && <BasicSettingsItem title="toggle connection" onPress={toggleConnection} />}
-                        {__DEV__ && <BasicSettingsItem title="damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
-                        {__DEV__ && <BasicSettingsItem title="snackbar" onPress={() =>
-                            snackbarState.pushTemporary('test')} />}
-                        {__DEV__ && <BasicSettingsItem title="snackbar long" onPress={() =>
-                            snackbarState.pushTemporary('test whatever you have been testing for a longer snackbar for the win whatever you have been testing for a longer snackbar for the win')} />}
-                        {__DEV__ && <BasicSettingsItem title="test Contacts" onPress={() => contactState.testImport()} />}
-                        {__DEV__ && <BasicSettingsItem title="test Share" onPress={() => this.testShare()} />}
-                        {__DEV__ && <BasicSettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
-                        {__DEV__ && <BasicSettingsItem title="test warning" onPress={() => warnings.addSevere('warning')} />}
-                        {__DEV__ && <BasicSettingsItem title="reset external setting" onPress={this.resetExternalSetting} />}
-                        {/* <BasicSettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
-                        {/* <BasicSettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
-                    </View>
+                    <ButtonWithIcon
+                        text={tu('button_logout')}
+                        accessibilityLabel="button_logout"
+                        style={{
+                            backgroundColor: vars.signoutSettingsButtonBg,
+                            width: '100%',
+                            paddingVertical: vars.spacing.medium.mini2x,
+                            borderRadius: 4
+                        }}
+                        bold
+                        color={vars.red}
+                        textStyle={{ color: vars.peerioBlue }}
+                        onPress={loginState.signOut}
+                        iconName="power-settings-new"
+                        testID="button_signOut"
+                    />
+                    {this.spacer}
+                    {__DEV__ && <BasicSettingsItem title="silent invite" onPress={this.testSilentInvite} />}
+                    {__DEV__ && <BasicSettingsItem title="toggle connection" onPress={toggleConnection} />}
+                    {__DEV__ && <BasicSettingsItem title="damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
+                    {__DEV__ && <BasicSettingsItem title="snackbar" onPress={() =>
+                        snackbarState.pushTemporary('test')} />}
+                    {__DEV__ && <BasicSettingsItem title="snackbar long" onPress={() =>
+                        snackbarState.pushTemporary('test whatever you have been testing for a longer snackbar for the win whatever you have been testing for a longer snackbar for the win')} />}
+                    {__DEV__ && <BasicSettingsItem title="test Contacts" onPress={() => contactState.testImport()} />}
+                    {__DEV__ && <BasicSettingsItem title="test Share" onPress={() => this.testShare()} />}
+                    {__DEV__ && <BasicSettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
+                    {__DEV__ && <BasicSettingsItem title="test warning" onPress={() => warnings.addSevere('warning')} />}
+                    {__DEV__ && <BasicSettingsItem title="reset external setting" onPress={this.resetExternalSetting} />}
+                    {/* <BasicSettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
+                    {/* <BasicSettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </ScrollView>
             </View>
         );
