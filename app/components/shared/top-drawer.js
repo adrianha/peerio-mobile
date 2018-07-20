@@ -101,10 +101,9 @@ export default class TopDrawer extends SafeComponent {
 
 TopDrawer.PropTypes = {
     heading: PropTypes.string.isRequired,
-    image: PropTypes.any,
+    image: PropTypes.any.isRequired,
     descriptionLine1: PropTypes.string.isRequired,
     descriptionLine2: PropTypes.string,
     buttonText: PropTypes.string.isRequired,
     buttonAction: PropTypes.func
 };
-

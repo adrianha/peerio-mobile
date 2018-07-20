@@ -59,15 +59,11 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
         );
     }
 
-    get topDrawerVisible() {
-        return TopDrawer.topDrawerVisible;
-    }
-
     get title() {
         return (
             <View>
                 {this.headerText}
-                {this.topDrawerVisible && <Image
+                {TopDrawer.topDrawerVisible && <Image
                     source={redArrowSrc}
                     style={{
                         width: vars.isDeviceScreenBig ? vars.iconSizeHuge : vars.iconSizeLarge2x,
