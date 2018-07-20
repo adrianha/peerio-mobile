@@ -22,7 +22,6 @@ import uiState from '../layout/ui-state';
 import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
-import TopDrawer from '../shared/top-drawer';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -119,18 +118,8 @@ export default class Files extends SafeComponent {
 
     keyExtractor = fsObject => fsObject ? (fsObject.fileId || fsObject.id) : null;
 
-    get topDrawer() {
-        return (<TopDrawer
-            headingText="Heading"
-            image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
-            descriptionText="Max 2 lines. Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-            buttonText="ButtonText"
-        />);
-    }
-
     get pageHeader() {
         return (<View>
-            {this.topDrawer}
             {this.searchTextbox()}
         </View>);
     }
