@@ -19,8 +19,6 @@ import uiState from '../layout/ui-state';
 import UnreadMessageIndicator from './unread-message-indicator';
 import { vars } from '../../styles/styles';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
-import TopDrawer from '../shared/top-drawer';
-import icons from '../helpers/icons';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -242,15 +240,6 @@ export default class ChatList extends SafeComponent {
         getSectionHeaderHeight: () => vars.chatListItemHeight
     });
 
-    get topDrawer() {
-        return (<TopDrawer
-            headingText="Heading"
-            image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
-            descriptionText="Max 2 lines. Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-            buttonText="ButtonText"
-        />);
-    }
-
     listView() {
         if (chatState.routerMain.currentIndex !== 0) return null;
         return (
@@ -260,6 +249,8 @@ export default class ChatList extends SafeComponent {
                 sections={this.dataSource}
                 renderItem={this.item}
                 renderSectionHeader={this.sectionHeader}
+                onEndReached={this.onEndReached}
+                onEndReachedThreshold={20}
                 enableEmptySections
                 ref={this.scrollViewRef}
                 onViewableItemsChanged={this.onViewableItemsChanged}
@@ -267,7 +258,6 @@ export default class ChatList extends SafeComponent {
                 stickySectionHeadersEnabled={false}
                 keyExtractor={this.keyExtractor}
                 viewabilityConfig={viewabilityConfig}
-                ListHeaderComponent={this.topDrawer}
                 // {...scrollHelper} TODO removed temporarily because it breaks unread message indicator
             />
         );
