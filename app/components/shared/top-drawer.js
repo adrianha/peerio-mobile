@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { action, reaction } from 'mobx';
+import { action, reaction, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, Animated } from 'react-native';
 import Text from '../controls/custom-text';
@@ -9,7 +9,6 @@ import { vars } from '../../styles/styles';
 import buttons from '../helpers/buttons';
 import icons from '../helpers/icons';
 import { uiState } from '../states';
-import preferenceStore from '../settings/preference-store';
 
 const headingStyle = {
     color: vars.darkBlue,
@@ -36,20 +35,26 @@ const iconStyle = {
 
 @observer
 export default class TopDrawer extends SafeComponent {
-    animated = new Animated.Value(-vars.topDrawerHeight);
+    animated = new Animated.Value(0);
+    @observable hide = false;
 
     componentDidMount() {
-        const toValue = 0;
+        console.log(`componentDidMount`);
         const duration = 400;
-        this.reaction = reaction(() => (uiState.keyboardHeight > 0), () => {
+        global.testAnimated = this.animated;
+        global.Animated = Animated;
+        this.reaction = reaction(() => this.topDrawerVisible, visible => {
+            const toValue = visible ? vars.topDrawerHeight : 0;
             Animated.timing(this.animated, {
-                toValue, duration, useNativeDriver: true
-            }).start();
+                toValue, duration // , useNativeDriver: true
+            }).start(() => {
+                this.animated.setValue(toValue);
+            });
         }, true);
     }
 
     get topDrawerVisible() {
-        return preferenceStore.prefs.showTopDrawer && (uiState.keyboardHeight === 0);
+        return !this.hide && (uiState.keyboardHeight === 0);
     }
 
     componentWillUnmount() {
@@ -58,33 +63,35 @@ export default class TopDrawer extends SafeComponent {
     }
 
     @action.bound onClose() {
-        preferenceStore.prefs.showTopDrawer = false;
+        this.hide = true;
     }
 
     renderThrow() {
         const { headingText, image, descriptionText, buttonText, buttonAction } = this.props;
+        const outerContiner = {
+            height: this.animated,
+            overflow: 'hidden'
+        };
         const container = {
             backgroundColor: 'white',
-            height: vars.topDrawerHeight,
-            transform: [
-                { translateY: this.animated }
-            ],
             alignItems: 'center',
             paddingBottom: vars.spacing.small.mini2x,
             borderBottomColor: vars.black12,
             borderBottomWidth: 1
         };
-        return this.topDrawerVisible ? (
-            <Animated.View style={container}>
-                <Text semibold style={headingStyle}>{headingText}</Text>
-                {image}
-                <Text numberOfLines={2} style={descriptionStyle}>{descriptionText}</Text>
-                {buttons.blueTextButton(buttonText, buttonAction, null, null, buttonText)}
-                <View style={iconStyle}>
-                    {icons.darkNoPadding('close', this.onClose)}
+        return (
+            <Animated.View style={outerContiner}>
+                <View style={container}>
+                    <Text semibold style={headingStyle}>{headingText}</Text>
+                    {image}
+                    <Text numberOfLines={2} style={descriptionStyle}>{descriptionText}</Text>
+                    {buttons.blueTextButton(buttonText, buttonAction, null, null, buttonText)}
+                    <View style={iconStyle}>
+                        {icons.darkNoPadding('close', this.onClose)}
+                    </View>
                 </View>
             </Animated.View>
-        ) : null;
+        );
     }
 }
 

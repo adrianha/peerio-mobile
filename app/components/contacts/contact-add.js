@@ -18,7 +18,6 @@ import routes from '../routes/routes';
 import icons from '../helpers/icons';
 import BackIcon from '../layout/back-icon';
 import whiteLabelComponents from '../../components/whitelabel/white-label-components';
-import TopDrawer from '../shared/top-drawer';
 
 const textinputContainer = {
     backgroundColor: vars.white,
@@ -224,19 +223,9 @@ export default class ContactAdd extends SafeComponent {
         );
     }
 
-    get topDrawer() {
-        return (<TopDrawer
-            headingText="Heading"
-            image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
-            descriptionText="Max 2 lines. Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-            buttonText="ButtonText"
-        />);
-    }
-
     renderThrow() {
         return (
             <View style={{ flex: 1, flexGrow: 1 }}>
-                {contactState.empty && this.topDrawer}
                 <ScrollView
                     onScroll={this.onScroll}
                     keyboardShouldPersistTaps="handled"
