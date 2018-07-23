@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Animated, FlatList } from 'react-native';
+import { View, Animated } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
@@ -22,6 +22,7 @@ import uiState from '../layout/ui-state';
 import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
+import { ListWithDrawer } from '../shared/list-with-drawer';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -120,7 +121,7 @@ export default class Files extends SafeComponent {
 
     list() {
         return (
-            <FlatList
+            <ListWithDrawer
                 keyExtractor={this.keyExtractor}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
-import { View, SectionList } from 'react-native';
+import { View } from 'react-native';
 import { action, computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ContactsPlaceholder from './contacts-placeholder';
@@ -13,6 +13,7 @@ import PlusBorderIcon from '../layout/plus-border-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import uiState from '../layout/ui-state';
+import { ListWithDrawer } from '../shared/list-with-drawer';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -50,7 +51,8 @@ export default class ContactList extends SafeComponent {
 
     listView() {
         return (
-            <SectionList
+            <ListWithDrawer
+                hasSections
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.sections}
                 keyExtractor={item => item.username || item.email}

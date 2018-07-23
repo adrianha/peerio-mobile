@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, LayoutAnimation, SectionList } from 'react-native';
+import { View, LayoutAnimation } from 'react-native';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 import { observable, reaction, action, computed } from 'mobx';
 import { chatInviteStore, chatStore } from '../../lib/icebear';
@@ -19,6 +19,7 @@ import uiState from '../layout/ui-state';
 import UnreadMessageIndicator from './unread-message-indicator';
 import { vars } from '../../styles/styles';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
+import ListWithDrawer from '../shared/list-with-drawer';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -243,7 +244,8 @@ export default class ChatList extends SafeComponent {
     listView() {
         if (chatState.routerMain.currentIndex !== 0) return null;
         return (
-            <SectionList
+            <ListWithDrawer
+                hasSections
                 style={{ flexGrow: 1 }}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.dataSource}
