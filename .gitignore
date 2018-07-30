@@ -56,7 +56,8 @@ tests/console.py
 *.pyc
 misc
 test/screenshots
-test/reports/result
+test/reports/*.json
+test/reports/*.html
 
 # env settings
 env.sh

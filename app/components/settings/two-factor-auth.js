@@ -42,7 +42,7 @@ async function twoFactorAuthPopup(active2FARequest) {
     console.log(JSON.stringify(active2FARequest));
     const { submit, cancel, type } = active2FARequest;
     const result = await popup2FA(
-        tx('title_2FA'),
+        tx('title_2FARequired'),
         tx('dialog_enter2FA'),
         type === 'login' ? tx('title_trustThisDevice') : null,
         uiState.trustDevice2FA,

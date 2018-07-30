@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import {
-    View
-} from 'react-native';
+import { observer } from 'mobx-react/native';
+import { View } from 'react-native';
 
+@observer
 export default class Bottom extends Component {
     render() {
         const style = {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Text from '../controls/custom-text';
@@ -16,6 +17,7 @@ const containerStyle = {
     alignItems: 'center'
 };
 
+@observer
 export default class ButtonWithIcon extends Component {
     render() {
         const { textStyle, color } = this.props;

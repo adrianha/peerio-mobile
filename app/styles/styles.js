@@ -5,7 +5,6 @@ import styledTextInput from './styled-text-input';
 import button from './button';
 import circles from './circles';
 import pickerBox from './picker-box';
-import pin from './pin';
 import wizard from './wizard';
 import navigator from './navigator';
 import inputMain from './input-main';
@@ -30,7 +29,6 @@ const styles = {
     button,
     circles,
     pickerBox,
-    pin,
     common,
     wizard,
     navigator,
@@ -47,7 +45,6 @@ export {
     button,
     circles,
     pickerBox,
-    pin,
     common,
     wizard,
     navigator,

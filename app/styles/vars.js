@@ -108,6 +108,7 @@ const vars = {
     popupPadding: scaleDim(20),
     popupHorizontalMargin: scaleDim(16),
     topDrawerHeight: scaleDim(192),
+    tfaInputWidth: scaleDim(124),
 
     circle: 10,
     circleSize: 4,

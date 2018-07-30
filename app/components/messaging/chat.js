@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { ScrollView, Image, View, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
+import { ScrollView, View, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
 import { observable, action, when, reaction, computed } from 'mobx';
-import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
 import ChatItem from './chat-item';
@@ -12,14 +11,12 @@ import ChatUnreadMessageIndicator from './chat-unread-message-indicator';
 import FileActionSheet from '../files/file-action-sheet';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
-import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
 import uiState from '../layout/ui-state';
 import VideoIcon from '../layout/video-icon';
 import IdentityVerificationNotice from './identity-verification-notice';
 import DmContactInvite from './dm-contact-invite';
 import { clientApp } from '../../lib/icebear';
-import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import ChatBeginningNotice from './chat-beginning-notice';
 import BackIcon from '../layout/back-icon';
 import routes from '../routes/routes';
@@ -45,6 +42,11 @@ export default class Chat extends SafeComponent {
     indicatorHeight = 16;
 
     componentDidMount() {
+        uiState.testAction2 = () => {
+            const y = Math.max(0, this.lastId / 2);
+            this.scrollView.scrollTo({ y, animated: false });
+        };
+
         this.selfMessageReaction = reaction(() => chatState.selfNewMessageCounter,
             () => {
                 this.isAtBottom = true;
@@ -70,7 +72,7 @@ export default class Chat extends SafeComponent {
     }
 
     get leftIcon() {
-        return <BackIcon action={routes.main.chats} />;
+        return <BackIcon action={routes.main.chats} testID="buttonBackIcon" />;
     }
 
     get rightIcon() {
@@ -241,7 +243,6 @@ export default class Chat extends SafeComponent {
         const maxY = this.contentHeight - this.scrollViewHeight;
         // values here may be float therefore the magic "2" number
         this.isAtBottom = (maxY - y) < 2;
-        console.log(`onscroll: ${y} - ${this.contentHeight} - ${this.scrollViewHeight}, ${y - maxY}`);
         clientApp.isReadingNewestMessages = this.isAtBottom;
 
         if (this.unreadMessageIndicatorTimeout) {
@@ -323,7 +324,7 @@ export default class Chat extends SafeComponent {
 
     @computed get zeroStateItem() {
         const { chat } = this;
-        if (chat.isChatCreatedFromPendingDM) return this.zeroStateChatInvite;
+        if (chat.isChatCreatedFromPendingDM) return <DmContactInvite />;
         return this.zeroStateChat;
     }
 
@@ -366,53 +367,8 @@ export default class Chat extends SafeComponent {
         );
     }
 
-    get zeroStateChatInvite() {
-        const { chat } = this;
-        const participant = chat.otherParticipants[0];
-        const emojiTada = require('../../assets/emoji/tada.png');
-        const container = {
-            flex: 1,
-            flexGrow: 1,
-            paddingTop: vars.dmInvitePaddingTop,
-            alignItems: 'center',
-            marginBottom: vars.spacing.small.midi
-        };
-        const emojiStyle = {
-            alignSelf: 'center',
-            width: vars.iconSizeMedium,
-            height: vars.iconSizeMedium,
-            marginBottom: vars.spacing.small.mini2x
-        };
-        const headingStyle = {
-            color: vars.lighterBlackText,
-            textAlign: 'center',
-            fontSize: vars.font.size.bigger,
-            lineHeight: 22,
-            marginBottom: vars.spacing.medium.maxi
-        };
-        const headingCopy = chat.isNewUserFromInvite ? 'title_newUserDmInviteHeading' : 'title_dmInviteHeading';
-        return (
-            <View style={container}>
-                <Image source={emojiTada} style={emojiStyle} resizeMode="contain" />
-                <Text style={headingStyle}>
-                    {tx(headingCopy, { contactName: participant.fullName })}
-                </Text>
-                <View style={{ alignItems: 'center' }}>
-                    <AvatarCircle contact={participant} medium />
-                </View>
-                <Text style={{ textAlign: 'center', marginBottom: vars.spacing.medium.maxi2x }}>
-                    {participant.usernameTag}
-                </Text>
-                <IdentityVerificationNotice />
-            </View>);
-    }
-
-    zeroStatePlaceholder() {
-        return <ChatZeroStatePlaceholder />;
-    }
-
     renderThrow() {
-        if (this.chat && this.chat.isInvite) return <DmContactInvite />;
+        if (this.chat && this.chat.isInvite) return <DmContactInvite showButtons />;
         return (
             <View
                 style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>

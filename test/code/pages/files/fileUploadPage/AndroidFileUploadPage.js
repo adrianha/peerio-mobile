@@ -3,7 +3,7 @@ const { selectorWithText, selectorWithPartialResourceId } = require('../../../he
 
 class AndroidFileUploadPage extends Page {
     async uploadFileFromGallery() {
-        await this.app.waitForExist(selectorWithText('Choose from gallery')).click(selectorWithText('Choose from gallery'));
+        await this.app.waitForExist(selectorWithText('Upload from gallery')).click(selectorWithText('Upload from gallery'));
 
         // Select an album from Gallery
         const galleryView = selectorWithPartialResourceId('(.*)root_view');
@@ -70,6 +70,7 @@ class AndroidFileUploadPage extends Page {
         const galleryW = await this.app.getElementSize(galleryView, 'width');
         const galleryH = await this.app.getElementSize(galleryView, 'height');
 
+        await this.app.pause(2000);
         // Assumption: 2 albums per row, 3 per column
         const albumsPerRow = 2;
         const albumsPerColumn = 3;
@@ -82,17 +83,9 @@ class AndroidFileUploadPage extends Page {
             }
         }]);
 
-        // Double tap is needed as it doesn't work without it
-        await this.app.touchPerform([{
-            action: 'tap',
-            options: {
-                x: galleryX + (galleryW / albumsPerRow) / 2,
-                y: galleryY + (galleryH / albumsPerColumn) / 2
-            }
-        }]);
-
-        await this.app.pause(2000);
+        await this.app.pause(4000);
         // Select an image from Gallery
+
         await this.app.waitForExist(galleryView).element(galleryView);
 
         // Get album size and position

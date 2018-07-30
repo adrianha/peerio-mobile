@@ -17,6 +17,7 @@ module.exports = {
         'prefer-rest-params': 0,
         'no-multi-assign': 0,
         'no-unused-vars': 1,
+        'no-await-in-loop': 0,
         'react/no-array-index-key': 0,
         'max-len': 0,
         'space-before-function-paren': 0,

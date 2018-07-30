@@ -3,6 +3,7 @@ import { setUrlMap, setTagHandler } from 'peerio-translator';
 import tagHandlers from '../components/controls/tag-handlers';
 import rnFileStream from './rn-file-stream';
 import KeyValueStorage from '../store/key-value-storage';
+import SqlCipherDbStorage from '../store/sqlcipher-db-storage';
 import whitelabel from '../components/whitelabel/white-label-config';
 
 const { setStringReplacement } = require('peerio-translator');
@@ -66,6 +67,7 @@ export default (c, icebear) => {
     cfg.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://changeme.peerio.com';
     cfg.FileStream = rnFileStream(icebear.FileStreamAbstract);
     cfg.StorageEngine = KeyValueStorage;
+    cfg.CacheEngine = SqlCipherDbStorage;
 
     cfg.FileStream.getCacheList()
         .then(r => {

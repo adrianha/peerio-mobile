@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { observer } from 'mobx-react/native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -39,6 +40,7 @@ const text = {
     paddingLeft: padding
 };
 
+@observer
 export default class FileInlineContainer extends SafeComponent {
     legacyNotification() {
         const errorContainer = {

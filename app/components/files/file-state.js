@@ -22,7 +22,7 @@ class FileState extends RoutedState {
 
     @action async init() {
         fileStore.folderStore.currentFolder = fileStore.folderStore.root;
-        return new Promise(resolve => when(() => !this.store.loading, resolve));
+        return new Promise(resolve => when(() => this.store.cacheLoaded, resolve));
     }
 
     get showSelection() {

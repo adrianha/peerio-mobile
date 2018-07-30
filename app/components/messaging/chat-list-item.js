@@ -97,7 +97,7 @@ export default class ChatListItem extends SafeComponent {
         if (!this.props || !this.props.chat) return null;
         const { chat } = this.props;
         const { otherParticipants, headLoaded } = chat;
-        if (!headLoaded) return null;
+        if (chat.isChannel && !headLoaded) return null;
         // group chats have null for contact
         let contact = null;
         let isDeleted = false;

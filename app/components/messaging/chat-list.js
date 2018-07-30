@@ -68,6 +68,14 @@ export default class ChatList extends SafeComponent {
         uiState.testAction1 = () => {
             this.reverseRoomSorting = !this.reverseRoomSorting;
         };
+        uiState.testAction2 = () => {
+            const { data, index } = this.dataSource[this.dataSource.length - 1];
+            this.scrollView.scrollToLocation({
+                itemIndex: data.length - 1,
+                sectionIndex: index,
+                viewPosition: 0
+            });
+        };
 
         this.indicatorReaction = reaction(() => [
             this.topIndicatorVisible,
@@ -260,7 +268,6 @@ export default class ChatList extends SafeComponent {
                 stickySectionHeadersEnabled={false}
                 keyExtractor={this.keyExtractor}
                 viewabilityConfig={viewabilityConfig}
-                // {...scrollHelper} TODO removed temporarily because it breaks unread message indicator
             />
         );
     }

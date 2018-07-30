@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, StatusBar, Animated, Dimensions } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { reaction, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import uiState from './ui-state';
@@ -11,15 +11,11 @@ import TabContainer from './tab-container';
 import SnackBar from '../snackbars/snackbar';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import ProgressOverlay from '../shared/progress-overlay';
-// import snackbarState from '../snackbars/snackbar-state';
-import Fab from '../shared/fab';
 import { common } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
 import CustomOverlay from './custom-overlay';
 import { topDrawerMaintenance } from '../shared/top-drawer-components';
-
-const { height } = Dimensions.get('window');
 
 @observer
 export default class LayoutMain extends SafeComponent {
@@ -27,25 +23,6 @@ export default class LayoutMain extends SafeComponent {
 
     componentDidMount() {
         reaction(() => uiState.appState, () => this.forceUpdate());
-    }
-
-    get isFabVisible() {
-        return routerMain.currentComponent && routerMain.currentComponent.isFabVisible;
-    }
-
-    get fab() {
-        const style = {
-            position: 'absolute',
-            right: 0,
-            bottom: this.isFabVisible ? 0 : -height,
-            paddingBottom: this._snackBar ? this._snackBar.animatedHeight : 0
-        };
-        return (
-            <Animated.View
-                style={style}>
-                <Fab />
-            </Animated.View>
-        );
     }
 
     get snackBar() {
@@ -82,7 +59,6 @@ export default class LayoutMain extends SafeComponent {
                     </Bottom>
                 </View>
                 {showInput && <InputMainContainer />}
-                {this.fab}
                 {actionsBar || <TabContainer />}
             </View>
         );

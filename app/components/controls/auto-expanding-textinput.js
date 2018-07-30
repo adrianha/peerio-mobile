@@ -4,6 +4,7 @@ import { TextInput } from 'react-native';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { vars } from '../../styles/styles';
 
+// TODO: @observer needs to be refactored here
 export default class AutoExpandingTextInput extends Component {
     constructor(props) {
         super(props);

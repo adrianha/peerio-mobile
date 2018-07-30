@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, NativeModules, Alert, FlatList } from 'react-native';
+import { observer } from 'mobx-react/native';
 import stringify from 'json-stringify-safe';
 import moment from 'moment';
 import Text from '../controls/custom-text';
@@ -15,6 +16,7 @@ const mapFormat = ({ time, msg }) => ({
 
 const mapGlue = ({ msg, time }) => `${time}: ${msg}`;
 
+@observer
 export default class Logs extends Component {
     sendLogs() {
         const subject = `Support // logs from ${User.current ? User.current.username : 'n/a'}`;

@@ -12,10 +12,6 @@
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
-		021C855E1F70C02C0046FFF4 /* include in Resources */ = {isa = PBXBuildFile; fileRef = 021C855B1F70C02C0046FFF4 /* include */; };
-		021C855F1F70C02C0046FFF4 /* RNACTReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 021C855D1F70C02C0046FFF4 /* RNACTReporter.m */; };
-		021C85931F70C0580046FFF4 /* libGoogleConversionTracking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C85911F70C0390046FFF4 /* libGoogleConversionTracking.a */; };
-		021C85951F70C0620046FFF4 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C85941F70C0620046FFF4 /* AdSupport.framework */; };
 		02202B821E840B07006CDA9B /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02202B791E840AF7006CDA9B /* libRNMail.a */; };
 		02210A811E019037006D7AC0 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02210A7F1E01902A006D7AC0 /* libRNSound.a */; };
 		02210A841E0191BA006D7AC0 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 02210A831E0191BA006D7AC0 /* sounds */; };
@@ -469,11 +465,7 @@
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
 		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
-		021C855B1F70C02C0046FFF4 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
-		021C855C1F70C02C0046FFF4 /* RNACTReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNACTReporter.h; sourceTree = "<group>"; };
-		021C855D1F70C02C0046FFF4 /* RNACTReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNACTReporter.m; sourceTree = "<group>"; };
 		021C85911F70C0390046FFF4 /* libGoogleConversionTracking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleConversionTracking.a; path = lib/libGoogleConversionTracking.a; sourceTree = "<group>"; };
-		021C85941F70C0620046FFF4 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		02210A6A1E01902A006D7AC0 /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		02210A831E0191BA006D7AC0 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = ../app/sounds; sourceTree = "<group>"; };
 		0221BCCC1DDC6D3C00706A4F /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
@@ -549,7 +541,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				021C85951F70C0620046FFF4 /* AdSupport.framework in Frameworks */,
 				0235B5DB1E65DEAF001D77D1 /* libsqlite3.0.tbd in Frameworks */,
 				02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */,
 				025373851EB3751800752E61 /* libsodium.a in Frameworks */,
@@ -584,7 +575,6 @@
 				02ADBC5E1EDDA0D600D304BE /* libRCTContacts.a in Frameworks */,
 				029F85611EE8052000C0CC31 /* libimageCropPicker.a in Frameworks */,
 				029F85771EEBBAB400C0CC31 /* libRCTAdSupport.a in Frameworks */,
-				021C85931F70C0580046FFF4 /* libGoogleConversionTracking.a in Frameworks */,
 				0268189B1F746B8900A42812 /* libRNViewShot.a in Frameworks */,
 				0268189C1F746B9400A42812 /* libRCTCameraRoll.a in Frameworks */,
 				0253BCEE20ACDE5C001A16B5 /* libKCKeepAwake.a in Frameworks */,
@@ -706,6 +696,7 @@
 			isa = PBXGroup;
 			children = (
 				D9AE8E217E044D3CBF892547 /* libKCKeepAwake.a */,
+				021C85911F70C0390046FFF4 /* libGoogleConversionTracking.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -795,8 +786,6 @@
 		02BCD72B1DFE1606000B8FCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				021C85941F70C0620046FFF4 /* AdSupport.framework */,
-				021C85911F70C0390046FFF4 /* libGoogleConversionTracking.a */,
 				025373841EB3751800752E61 /* libsodium.a */,
 				0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */,
 				02BCD72C1DFE1606000B8FCF /* QuickLook.framework */,
@@ -857,9 +846,6 @@
 		13B07FAE1A68108700A75B9A /* peeriomobile */ = {
 			isa = PBXGroup;
 			children = (
-				021C855B1F70C02C0046FFF4 /* include */,
-				021C855C1F70C02C0046FFF4 /* RNACTReporter.h */,
-				021C855D1F70C02C0046FFF4 /* RNACTReporter.m */,
 				02726F571EB33C7A00D82BF5 /* libsodium-ios */,
 				02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */,
 				02321C5C1D80558E00282EB1 /* main.jsbundle */,
@@ -1576,7 +1562,6 @@
 				CF69BA63107E428598B08410 /* EvilIcons.ttf in Resources */,
 				51CAD96E068B4E2EAA239290 /* FontAwesome.ttf in Resources */,
 				B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */,
-				021C855E1F70C02C0046FFF4 /* include in Resources */,
 				02AF5ADE20842C18005056CF /* OpenSansItalic.ttf in Resources */,
 				02AF5ADF20842C18005056CF /* OpenSansSemiBoldItalic.ttf in Resources */,
 				02E096DC1DAE50E100641B85 /* dict in Resources */,
@@ -1619,7 +1604,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				02A5EE7C1ECA9ECC00ED05C1 /* RNKeychain.m in Sources */,
-				021C855F1F70C02C0046FFF4 /* RNACTReporter.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				02726F891EB33E3000D82BF5 /* RNSodium.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,

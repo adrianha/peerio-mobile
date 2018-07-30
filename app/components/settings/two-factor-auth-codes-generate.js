@@ -61,6 +61,7 @@ export default class TwoFactorAuthCodesGenerate extends SafeComponent {
                             tx('button_2FAGenerateCodes'),
                             () => this.reissueCodes(),
                             null,
+                            null,
                             { width: vars.wideRoundedButtonWidth })}
                     </View>
                 </View>

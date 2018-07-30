@@ -40,9 +40,17 @@ const textNormal = {
 };
 
 const accountKeyText = {
+    flexGrow: 1,
+    flexShrink: 1,
     color: vars.lighterBlackText,
     fontSize: vars.font.size.big,
     width: 224
+};
+
+const copyBtnContainer = {
+    alignSelf: 'center',
+    paddingLeft: vars.spacing.small.maxi2x,
+    paddingRight: vars.spacing.small.midi
 };
 
 const accountKeyRow = {
@@ -62,6 +70,16 @@ const accountKeyView = {
 
 @observer
 export default class SignupStep1 extends LoginWizardPage {
+    get formattedAccountKey() {
+        const stringLength = signupState.passphrase.length;
+        const stringMiddle = Math.ceil(stringLength / 2);
+        const firstLine = signupState.passphrase.substring(0, stringMiddle);
+        const secondLine = signupState.passphrase.substring(stringMiddle, stringLength);
+        const formatted = `${firstLine}\n${secondLine}`;
+
+        return formatted;
+    }
+
     copyAccountKey() {
         Clipboard.setString(signupState.passphrase);
         snackbarState.pushTemporary(t('title_copied'));
@@ -85,9 +103,9 @@ export default class SignupStep1 extends LoginWizardPage {
                     <Text style={smallText}>{tx('title_yourAccountKey')}</Text>
                     <View style={accountKeyRow}>
                         <Text bold {...testLabel('passphrase')} style={accountKeyText} selectable>
-                            {signupState.passphrase}
+                            {this.formattedAccountKey}
                         </Text>
-                        {buttons.blueTextButton(tx('button_copy'), this.copyAccountKey)}
+                        {buttons.blueTextButton(tx('button_copy'), this.copyAccountKey, null, null, null, copyBtnContainer)}
                     </View>
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>

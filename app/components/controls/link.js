@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import { Linking } from 'react-native';
 import Text from '../controls/custom-text';
 
+@observer
 export default class Link extends Component {
     constructor(props) {
         super(props);

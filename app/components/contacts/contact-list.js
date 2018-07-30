@@ -39,13 +39,13 @@ export default class ContactList extends SafeComponent {
     }
 
     @computed get sections() {
-        const { addedContacts, invitedContacts, uiView, contacts } = contactState.store;
+        const { addedContacts, invitedNotJoinedContacts, uiView, contacts } = contactState.store;
         const sections = uiView.map(({ letter, items }) => {
             return ({ data: items, key: letter });
         });
         sections.unshift({ data: [], key: `All (${contacts.length})` });
         sections.unshift({ data: addedContacts, key: `${tx('title_favoriteContacts')} (${addedContacts.length})` });
-        sections.push({ data: invitedContacts, key: `${tx('title_invitedContacts')} (${invitedContacts.length})` });
+        sections.push({ data: invitedNotJoinedContacts, key: `${tx('title_invitedContacts')} (${invitedNotJoinedContacts.length})` });
         return sections;
     }
 

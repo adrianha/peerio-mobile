@@ -24,6 +24,7 @@ function findPrefixedName(k) {
     return name;
 }
 
+// TODO: this doesn't need @observer, probably, never
 class T extends Component {
     componentDidMount() {
         this.localeUpdateReaction = reaction(() => uiState.locale, () => {

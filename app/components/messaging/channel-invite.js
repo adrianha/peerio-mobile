@@ -65,6 +65,28 @@ const buttonContainer = {
     justifyContent: 'center'
 };
 
+const moreContainer = {
+    backgroundColor: vars.txtLightGrey,
+    height: vars.avatarDiameter,
+    paddingHorizontal: vars.spacing.small.maxi2x,
+    width: vars.avatarDiameter * 2,
+    borderRadius: vars.avatarDiameter / 2,
+    alignSelf: 'center',
+    marginLeft: -vars.avatarDiameter,
+    zIndex: -1,
+    display: 'flex',
+    alignItems: 'center'
+};
+
+const moreText = {
+    backgroundColor: 'transparent',
+    textAlign: 'right',
+    alignSelf: 'flex-end',
+    lineHeight: vars.avatarDiameter,
+    color: vars.white,
+    fontSize: vars.font.size.small
+};
+
 @observer
 export default class ChannelInvite extends SafeComponent {
     @observable waiting = false;
@@ -96,6 +118,46 @@ export default class ChannelInvite extends SafeComponent {
     get inviteText() { return 'title_roomInviteHeading'; }
 
     get inviteRoomName() { return this.invitation.channelName; }
+
+    get participants() {
+        const { participants } = this.invitation;
+        if (!participants || participants.length <= 2) { return null; }
+
+        const maxToShow = 4;
+        const withoutCurrentAndHost = participants
+            .filter(x => x !== User.current.username)
+            .filter(x => x !== this.invitation.username);
+
+        const toRender = withoutCurrentAndHost.slice(0, maxToShow);
+
+        const notShown = withoutCurrentAndHost.length - maxToShow;
+
+        return (
+            <View style={{ alignItems: 'center' }}>
+                <View style={infoText}>
+                    <Text style={hostedByStyle}>
+                        {tx('title_whoIsAlreadyIn')}
+                    </Text>
+                    <Text style={hostNameStyle}>
+                        &nbsp;#{this.inviteRoomName}
+                    </Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    {toRender.map(participant => (
+                        <View style={{ marginLeft: -vars.spacing.small.midi }}>
+                            <AvatarCircle key={participant} contact={contactStore.getContact(participant)} />
+                        </View>
+                    ))}
+                    {notShown > 0 &&
+                        <View style={moreContainer}>
+                            <Text bold style={moreText}>
+                                {`+${notShown}`}
+                            </Text>
+                        </View>}
+                </View>
+            </View>
+        );
+    }
 
     renderThrow() {
         const hasPaywall = User.current.channelsLeft <= 0;
@@ -142,6 +204,7 @@ export default class ChannelInvite extends SafeComponent {
                         </Text>
                     </View>
                     <AvatarCircle contact={host} />
+                    {this.participants}
                 </View>
                 <ProgressOverlay enabled={this.waiting} />
             </View>);

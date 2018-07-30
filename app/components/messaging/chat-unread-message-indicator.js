@@ -6,6 +6,7 @@ import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { chatStore } from '../../lib/icebear';
+import testLabel from '../helpers/test-label';
 
 const touchableContainer = {
     marginBottom: vars.spacing.small.midi2x,
@@ -47,7 +48,8 @@ export default class ChatUnreadMessageIndicator extends SafeComponent {
             <TouchableOpacity
                 style={touchableContainer}
                 onPress={this.props.onPress}
-                pressRetentionOffset={vars.pressRetentionOffset}>
+                pressRetentionOffset={vars.pressRetentionOffset}
+                {...testLabel('chatUnreadMessageIndicator')}>
                 <View style={indicatorContainer}>
                     {icons.plain('keyboard-arrow-down', vars.iconSize, vars.peerioBlue)}
                 </View>

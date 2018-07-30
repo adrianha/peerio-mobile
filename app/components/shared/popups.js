@@ -1,7 +1,7 @@
 import React from 'react';
 import RNFS from 'react-native-fs';
 import FileOpener from 'react-native-file-opener';
-import { WebView, Image, View, Platform, Dimensions } from 'react-native';
+import { WebView, Image, View, Platform } from 'react-native';
 import { observable } from 'mobx';
 import Text from '../controls/custom-text';
 import { t, tu, tx } from '../utils/translator';
@@ -14,8 +14,7 @@ import { fileStore, User, config } from '../../lib/icebear';
 import testLabel from '../helpers/test-label';
 import FilePreview from '../files/file-preview';
 import PopupMigration from '../controls/popup-migration';
-
-const { width } = Dimensions.get('window');
+import TwoFactorAuthPrompt from '../settings/two-factor-auth-prompt';
 
 const titleStyle = {
     color: vars.lighterBlackText,
@@ -160,21 +159,18 @@ function popupOkCancel(title, subTitle, text) {
     });
 }
 
-function popupConfirmEmailInvites(body) {
-    const image = require('../../assets/email-invite-confirmation.png');
-    const imageWidth = width - (2 * vars.popupHorizontalMargin);
+function popupConfirmCancelIllustration(imageObject, content, confirmCopy, cancelCopy) {
     const contents = (<View>
-        <Image style={{ borderTopLeftRadius: 4, width: imageWidth, height: imageWidth / 3.822 }} // image ratio
-            source={image} resizeMode="contain" />
-        {body}
+        {imageObject}
+        {content}
     </View>);
     return new Promise((resolve) => {
         popupState.showPopup({
             noPadding: true,
             contents,
             buttons: [
-                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
-                { id: 'confirm', text: tu('button_confirm'), action: () => resolve(true) }
+                { id: tx(cancelCopy), text: tu(cancelCopy), action: () => resolve(false), secondary: true },
+                { id: tx(confirmCopy), text: tu(confirmCopy), action: () => resolve(true) }
             ]
         });
     });
@@ -339,33 +335,27 @@ function popupKeychainError(title, subTitle, text) {
     });
 }
 
-
 function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
-    const helperTextStyle = {
-        color: vars.subtleText,
-        fontSize: vars.font.size.smaller,
-        paddingVertical: vars.spacing.small.midi
-    };
     return new Promise((resolve) => {
-        const o = observable({ value: '', checked });
+        const state = observable({
+            value: '',
+            checked
+        });
         const buttons = [];
         cancelable && buttons.push({
             id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
         });
         buttons.push({
-            id: 'ok', text: tu('button_submit'), action: () => resolve(o), get disabled() { return !o.value; }
+            id: 'ok', text: tu('button_submit'), action: () => resolve(state), get disabled() { return !state.value; }
         });
-        const contents = (
-            <View style={{ minHeight: vars.popupMinHeight }}>
-                {inputControl(o, placeholder, testLabel('2faTokenInput'))}
-                <Text style={helperTextStyle}>
-                    {tx('title_2FAHelperText')}
-                </Text>
-                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; }, false, 'trustDevice')}
-            </View>
-        );
+        const checkbox = checkBoxControl(checkBoxText, state.checked, v => { state.checked = v; }, false, 'trustDevice');
+        const onSubmitEditing = () => {
+            resolve(state);
+            popupState.discardPopup();
+        };
+        const contents = <TwoFactorAuthPrompt {...{ placeholder, checked, title, state, checkbox, onSubmitEditing }} />;
         popupState.showPopup({
-            title,
+            noPadding: true,
             contents,
             buttons
         });
@@ -533,7 +523,7 @@ export {
     popupYes,
     popupYesCancel,
     popupOkCancel,
-    popupConfirmEmailInvites,
+    popupConfirmCancelIllustration,
     popupYesSkip,
     popupInput,
     popupInputWithPreview,

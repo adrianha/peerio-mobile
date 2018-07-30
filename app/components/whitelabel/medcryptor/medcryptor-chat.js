@@ -18,7 +18,7 @@ function backFromChat(chat) {
 @observer
 export default class MedcryptorChat extends Chat {
     get leftIcon() {
-        return <BackIcon action={() => backFromChat(this.chat)} />;
+        return <BackIcon testID="buttonBackIcon" action={() => backFromChat(this.chat)} />;
     }
 
     zeroStatePlaceholder() {

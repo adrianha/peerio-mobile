@@ -24,6 +24,26 @@ class ChatListPage extends Page {
     get bottomUnreadMessageIndicator() {
         return this.getWhenVisible('~chatlist-unread-indicator-bottom');
     }
+
+    get patientSpace() {
+        return this.getWhenVisible('~Patient 1');
+    }
+
+    get internalRoomsHeader() {
+        return this.checkIfVisible('~Internal rooms');
+    }
+
+    get patientRoomsHeader() {
+        return this.checkIfVisible('~Patient rooms');
+    }
+
+    get consultationRoom() {
+        return this.getWhenVisible('~Consultation');
+    }
+
+    get internalRoom() {
+        return this.getWhenVisible('~general');
+    }
 }
 
 module.exports = ChatListPage;

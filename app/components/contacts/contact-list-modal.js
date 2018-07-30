@@ -37,7 +37,7 @@ export default class ContactListModal extends SafeComponent {
     item = ({ item }) => {
         const onPress = () => this.props.action(item);
         return item.isChannel ?
-            <ChannelListItem chat={item} onPress={onPress} /> :
+            <ChannelListItem chat={item} channelName={item.name} onPress={onPress} /> :
             <ContactItem contact={item} onPress={onPress} />;
     };
 

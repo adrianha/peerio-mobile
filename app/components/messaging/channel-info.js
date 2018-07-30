@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity, TextInput } from 'react-native';
+import { View, TouchableOpacity, TextInput, Dimensions, Image } from 'react-native';
 import { observable } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
@@ -8,13 +8,25 @@ import LayoutModalExit from '../layout/layout-modal-exit';
 import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
-import { popupCancelConfirm } from '../shared/popups';
+import { popupCancelConfirm, popupConfirmCancelIllustration } from '../shared/popups';
 import { tx } from '../utils/translator';
 import { config } from '../../lib/icebear';
 import ChannelInfoListState from '../channels/channel-info-list-state';
 import testLabel from '../helpers/test-label';
 
+const { width } = Dimensions.get('window');
+
+const titleStyle = {
+    fontSize: vars.font.size.big,
+    marginBottom: vars.spacing.small.midi2x,
+    color: vars.txtDark
+};
+const descriptionStyle = {
+    color: vars.subtleText
+};
+
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
+const leaveRoomIllustration = require('../../assets/chat/leave-room-confirmation-mobile.png');
 
 const textStyle = {
     color: vars.txtDate,
@@ -44,8 +56,20 @@ export default class ChannelInfo extends SafeComponent {
         chatState.routerModal.channelAddPeople();
     };
 
+    popupLeaveChannelConfirmation() {
+        const imageWidth = width - (2 * vars.popupHorizontalMargin);
+        const image = (<Image style={{ borderTopLeftRadius: 4, width: imageWidth, height: imageWidth / 2.417 }} // image ratio
+            source={leaveRoomIllustration} resizeMode="contain" />);
+        const content =
+            (<View style={{ padding: vars.popupPadding, paddingTop: vars.spacing.medium.maxi }}>
+                <Text bold style={titleStyle}>{tx('title_confirmChannelLeave')}</Text>
+                <Text style={descriptionStyle}>{tx('title_confirmChannelLeaveDescription')}</Text>
+            </View>);
+        return popupConfirmCancelIllustration(image, content, 'button_leave', 'button_cancel');
+    }
+
     leaveChannel = async () => {
-        if (await popupCancelConfirm(tx('button_leaveChannel'), tx('title_confirmChannelLeave'))) {
+        if (await this.popupLeaveChannelConfirmation()) {
             chatState.routerMain.chats();
             await chatState.routerModal.discard();
             await this.chat.leave();

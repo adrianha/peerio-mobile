@@ -39,6 +39,14 @@ const existingUsers = {
         name: process.env.CHATLISTUNREADSENDER_TEST_USER_2,
         passphrase: process.env.CHATLISTUNREADSENDER_TEST_PASS_2
     },
+    chatunreadsender: {
+        name: process.env.CHATUNREADSENDER_TEST_USER,
+        passphrase: process.env.CHATUNREADSENDER_TEST_PASS
+    },
+    chatunreadreciever: {
+        name: process.env.CHATUNREADRECIEVER_TEST_USER,
+        passphrase: process.env.CHATUNREADRECIEVER_TEST_PASS
+    },
     leavechannelnav_inviter: {
         name: process.env.LEAVECHANNELNAV_TEST_USER,
         passphrase: process.env.LEAVECHANNELNAV_TEST_PASS
@@ -46,6 +54,10 @@ const existingUsers = {
     leavechannelnav_invitee: {
         name: process.env.LEAVECHANNELNAV1_TEST_USER,
         passphrase: process.env.LEAVECHANNELNAV1_TEST_PASS
+    },
+    doctor: {
+        name: process.env.MCR_DOCTOR_USER,
+        passphrase: process.env.MCR_DOCTOR_PASS
     }
 };
 

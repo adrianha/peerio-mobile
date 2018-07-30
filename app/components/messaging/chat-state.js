@@ -41,10 +41,6 @@ class ChatState extends RoutedState {
     @action async init() {
         const { store } = this;
         await promiseWhen(() => store.loaded);
-        await promiseWhen(
-            () => store.chats.filter(c => c.headLoaded).length === store.chats.length,
-            5000
-        );
     }
 
     get currentChat() {

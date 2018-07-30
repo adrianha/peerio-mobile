@@ -79,7 +79,7 @@ export default class TestHelper extends Component {
                 {this.item('↓', 'endScroll', this.scrollEnd)}
                 {this.item('1', 'testAction1', () => uiState.testAction1())}
                 {this.item('2', 'testAction2', () => uiState.testAction2())}
-                {this.item('3', 'testAction2', () => uiState.testAction3())}
+                {this.item('3', 'testAction3', () => uiState.testAction3())}
             </View>
         );
     }

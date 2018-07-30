@@ -16,7 +16,7 @@ export default class HeaderMain extends SafeComponent {
         let leftIcon = this.props.leftIcon || null;
         const rightIcon = this.props.rightIcon || null;
         if (routerMain.isBackVisible) {
-            leftIcon = <BackIcon testID="buttonChatBack" />;
+            leftIcon = <BackIcon testID="buttonBackIcon" />;
         }
         const { titleAction } = routerMain;
         const extraMargin = titleAction ? 2 : 0;
