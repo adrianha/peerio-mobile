@@ -41,7 +41,7 @@ export default class TopDrawer extends SafeComponent {
     @observable hide = false;
 
     componentDidMount() {
-        const duration = 400;
+        const duration = 500;
         global.testAnimated = this.animated;
         global.Animated = Animated;
         this.reaction = reaction(() => uiState.topDrawerVisible, visible => {

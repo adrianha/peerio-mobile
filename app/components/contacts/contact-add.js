@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ScrollView, TouchableOpacity, LayoutAnimation, Share, Platform } from 'react-native';
+import { View, TouchableOpacity, LayoutAnimation, Share, Platform } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import SafeComponent from '../shared/safe-component';
