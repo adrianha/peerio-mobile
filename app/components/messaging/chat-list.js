@@ -259,7 +259,6 @@ export default class ChatList extends SafeComponent {
                 sections={this.dataSource}
                 renderItem={this.item}
                 renderSectionHeader={this.sectionHeader}
-                onEndReached={this.onEndReached}
                 onEndReachedThreshold={20}
                 enableEmptySections
                 ref={this.scrollViewRef}

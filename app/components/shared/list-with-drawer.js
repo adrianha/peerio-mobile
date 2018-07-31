@@ -16,12 +16,8 @@ export default class ListWithDrawer extends SafeComponent {
             </View>
         );
         return (hasSections ?
-            <SectionList {...this.props} ListHeaderComponent={listHeaderComponent}>
-                {this.props.children}
-            </SectionList>
-            : <FlatList {...this.props} ListHeaderComponent={listHeaderComponent}>
-                {this.props.children}
-            </FlatList>
+            <SectionList {...this.props} ListHeaderComponent={listHeaderComponent} />
+            : <FlatList {...this.props} ListHeaderComponent={listHeaderComponent} />
         );
     }
 }
