@@ -122,6 +122,7 @@ export default class Files extends SafeComponent {
     list() {
         return (
             <ListWithDrawer
+                ListHeaderComponent={!this.isZeroState && this.searchTextbox()}
                 keyExtractor={this.keyExtractor}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
@@ -130,8 +131,7 @@ export default class Files extends SafeComponent {
                 renderItem={this.item}
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={0.5}
-                ref={this.flatListRef}
-            />
+                ref={this.flatListRef} />
         );
     }
 
@@ -277,7 +277,6 @@ export default class Files extends SafeComponent {
             <View
                 style={{ flex: 1 }}>
                 <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
-                    {!this.isZeroState && this.searchTextbox()}
                     {upgradeForFiles()}
                     {this.noFilesInFolder}
                     {/* this.sharedFolderRemovalNotifs() */}

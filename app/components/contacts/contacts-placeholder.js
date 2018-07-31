@@ -5,7 +5,6 @@ import Text from '../controls/custom-text';
 import buttons from '../helpers/buttons';
 import { t, tx } from '../utils/translator';
 import contactState from './contact-state';
-// import SafeComponent from '../shared/safe-component';
 
 @observer
 export default class ContactsPlaceholder extends Component {

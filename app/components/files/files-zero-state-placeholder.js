@@ -5,6 +5,7 @@ import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
+import ViewWithDrawer from '../shared/view-with-drawer';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
 
@@ -28,8 +29,10 @@ export default class FilesPlaceholder extends SafeComponent {
             marginTop: vars.spacing.large.maxi,
             marginBottom: vars.spacing.small.midi2x
         };
-        const imageContainer = {
+        const imageStyle = {
             flex: 1,
+            width: this.width,
+            height: 275,
             paddingLeft: vars.spacing.medium.midi2x,
             paddingRight: vars.spacing.medium.midi2x
         };
@@ -44,20 +47,20 @@ export default class FilesPlaceholder extends SafeComponent {
             fontSize: vars.font.size.bigger
         };
         return (
-            <View style={outerContainer}>
-                <View style={infoContainer}>
-                    <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
-                </View>
-                <View style={imageContainer}>
+            <ViewWithDrawer style={{ flex: 1, flexGrow: 1 }}>
+                <View style={outerContainer}>
+                    <View style={infoContainer}>
+                        <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
+                    </View>
                     <Image
                         source={fileUploadZeroState}
                         resizeMode="contain"
-                        style={{ flex: 1, width: null, height: null }} />
+                        style={imageStyle} />
+                    <View style={{ flex: 0.5 }}>
+                        <Text style={headerStyle}>{tx('title_uploadSomething')}</Text>
+                    </View>
                 </View>
-                <View style={{ flex: 0.5 }}>
-                    <Text style={headerStyle}>{tx('title_uploadSomething')}</Text>
-                </View>
-            </View>
+            </ViewWithDrawer>
         );
     }
 }

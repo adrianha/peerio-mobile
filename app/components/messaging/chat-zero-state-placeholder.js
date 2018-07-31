@@ -8,7 +8,8 @@ import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 import buttons from '../helpers/buttons';
 import routes from '../routes/routes';
-import TopDrawer from '../shared/top-drawer';
+import ViewWithDrawer from '../shared/view-with-drawer';
+import uiState from '../layout/ui-state';
 
 const redArrowSrc = require('../../assets/zero_chat_state/arrow-red.png');
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
@@ -63,7 +64,7 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
         return (
             <View>
                 {this.headerText}
-                {TopDrawer.topDrawerVisible && <Image
+                {uiState.topDrawerVisible && <Image
                     source={redArrowSrc}
                     style={{
                         width: vars.isDeviceScreenBig ? vars.iconSizeHuge : vars.iconSizeLarge2x,
@@ -111,11 +112,11 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
     renderThrow() {
         return (
             <View style={container}>
-                <View style={wrapper}>
+                <ViewWithDrawer style={wrapper}>
                     {this.title}
                     {this.chatUI}
                     {this.contactUI}
-                </View>
+                </ViewWithDrawer>
             </View>
         );
     }

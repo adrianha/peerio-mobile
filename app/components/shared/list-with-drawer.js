@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { SectionList, FlatList } from 'react-native';
+import { View, SectionList, FlatList } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { topDrawerMaintenance } from '../shared/top-drawer-components';
@@ -9,13 +9,17 @@ import { topDrawerMaintenance } from '../shared/top-drawer-components';
 export default class ListWithDrawer extends SafeComponent {
     renderThrow() {
         const { hasSections } = this.props;
-        return (hasSections ?
-            <SectionList {...this.props}>
+        const listHeaderComponent = (
+            <View>
                 {topDrawerMaintenance()}
+                {this.props.ListHeaderComponent}
+            </View>
+        );
+        return (hasSections ?
+            <SectionList {...this.props} ListHeaderComponent={listHeaderComponent}>
                 {this.props.children}
             </SectionList>
-            : <FlatList {...this.props}>
-                {topDrawerMaintenance()}
+            : <FlatList {...this.props} ListHeaderComponent={listHeaderComponent}>
                 {this.props.children}
             </FlatList>
         );

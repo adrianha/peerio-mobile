@@ -18,6 +18,7 @@ import routes from '../routes/routes';
 import icons from '../helpers/icons';
 import BackIcon from '../layout/back-icon';
 import whiteLabelComponents from '../../components/whitelabel/white-label-components';
+import ViewWithDrawer from '../shared/view-with-drawer';
 
 const textinputContainer = {
     backgroundColor: vars.white,
@@ -234,8 +235,8 @@ export default class ContactAdd extends SafeComponent {
 
     renderThrow() {
         return (
-            <View style={{ flex: 1, flexGrow: 1 }}>
-                <ScrollView
+            <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
+                <ViewWithDrawer
                     onScroll={this.onScroll}
                     keyboardShouldPersistTaps="handled"
                     style={{ backgroundColor: vars.darkBlueBackground05 }}
@@ -278,9 +279,8 @@ export default class ContactAdd extends SafeComponent {
                                 {this.renderButton1('button_share', () => this.share())}
                             </View>
                         </View>
-                        <View style={{ height: 180 }} />
                     </View>
-                </ScrollView>
+                </ViewWithDrawer>
                 <ProgressOverlay enabled={this.waiting} />
             </View>
         );

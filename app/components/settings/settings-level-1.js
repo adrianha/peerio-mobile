@@ -17,6 +17,7 @@ import { scrollHelper } from '../helpers/test-helper';
 import icons from '../helpers/icons';
 import AvatarCircle from '../shared/avatar-circle';
 import PaymentStorageUsageItem from '../payments/payments-storage-usage-item';
+import ViewWithDrawer from '../shared/view-with-drawer';
 
 const bgStyle = {
     flexGrow: 1,
@@ -96,7 +97,7 @@ export default class SettingsLevel1 extends SafeComponent {
                 <Text style={[descriptionTextStyle, { position: 'absolute', right: 0 }]}>{tx('title_getMoreGoPro')}</Text>
             </SettingsItem>);
         return (
-            <View style={bgStyle}>
+            <ViewWithDrawer style={bgStyle}>
                 <ScrollView contentContainerStyle={svStyle} {...scrollHelper}>
                     <SettingsItem title={User.current.fullName} description={User.current.username} rightIcon={null} semibold large
                         onPress={() => settingsState.transition('profile')}
@@ -161,7 +162,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {/* <BasicSettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <BasicSettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </ScrollView>
-            </View>
+            </ViewWithDrawer>
         );
     }
 }

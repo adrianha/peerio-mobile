@@ -44,7 +44,7 @@ export default class TopDrawer extends SafeComponent {
         const duration = 400;
         global.testAnimated = this.animated;
         global.Animated = Animated;
-        this.reaction = reaction(() => this.topDrawerVisible, visible => {
+        this.reaction = reaction(() => uiState.topDrawerVisible, visible => {
             const toValue = visible ? vars.topDrawerHeight : 0;
             Animated.timing(this.animated, {
                 toValue, duration
@@ -54,17 +54,13 @@ export default class TopDrawer extends SafeComponent {
         }, true);
     }
 
-    get topDrawerVisible() {
-        return !this.hide && (uiState.keyboardHeight === 0);
-    }
-
     componentWillUnmount() {
         this.reaction && this.reaction();
         this.reaction = null;
     }
 
     @action.bound onClose() {
-        this.hide = true;
+        uiState.topDrawerDismissed = true;
     }
 
     renderThrow() {
