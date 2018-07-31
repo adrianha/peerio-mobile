@@ -19,17 +19,6 @@ module.exports = function(api) {
                     method: 'coroutine'
                 }
             ]
-        ],
-        env: {
-            production: {
-                sourceMaps: false,
-                comments: false,
-                plugins: ['console-kungfu']
-            },
-            development: {
-                sourceMaps: true,
-                presets: [['@babel/preset-react', { development: true }]]
-            }
-        }
+        ]
     };
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Clipboard, TouchableOpacity } from 'react-native';
-import ViewShot from 'react-native-view-shot';
 import Text from '../controls/custom-text';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
@@ -116,7 +115,7 @@ export default class SignupStep1 extends LoginWizardPage {
     render() {
         return (
             <View style={container} onLayout={this._layout}>
-                <ViewShot ref={ref => { this._viewShot = ref; }}>
+                <View>
                     <View style={header2}>
                         <Text style={headingStyle2}>{tx('title_AccountKey')}</Text>
                     </View>
@@ -133,7 +132,7 @@ export default class SignupStep1 extends LoginWizardPage {
                             {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
                         </TouchableOpacity>
                     </View>
-                </ViewShot>
+                </View>
                 <View style={buttonRowStyle}>
                     {this.button('button_back', () => signupState.prev())}
                     {this.button('button_next', () => signupState.next(), false, !socket.connected)}

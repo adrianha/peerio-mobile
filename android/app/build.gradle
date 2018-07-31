@@ -154,7 +154,6 @@ android {
 
 dependencies {
     compile project(':react-native-keep-awake')
-    compile project(':react-native-view-shot')
     compile project(':react-native-file-picker')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-contacts')
