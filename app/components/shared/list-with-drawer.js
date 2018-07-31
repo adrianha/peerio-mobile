@@ -3,20 +3,20 @@ import React from 'react';
 import { SectionList, FlatList } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
-import { topDrawerMaintenance } from '../shared/top-drawer';
+import { topDrawerMaintenance } from '../shared/top-drawer-components';
 
 @observer
 export default class ListWithDrawer extends SafeComponent {
     renderThrow() {
         const { hasSections } = this.props;
         return (hasSections ?
-            <SectionList>
+            <SectionList {...this.props}>
                 {topDrawerMaintenance()}
-                {...this.props}
+                {this.props.children}
             </SectionList>
-            : <FlatList>
+            : <FlatList {...this.props}>
                 {topDrawerMaintenance()}
-                {...this.props}
+                {this.props.children}
             </FlatList>
         );
     }

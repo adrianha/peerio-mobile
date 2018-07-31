@@ -15,7 +15,6 @@ import { common } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
 import CustomOverlay from './custom-overlay';
-import { topDrawerMaintenance } from '../shared/top-drawer-components';
 
 @observer
 export default class LayoutMain extends SafeComponent {
@@ -51,7 +50,6 @@ export default class LayoutMain extends SafeComponent {
                 <SnackBarConnection />
                 <View
                     style={{ flex: 1, flexGrow: 1 }}>
-                    {topDrawerMaintenance()}
                     {currentPage}
                     <Bottom>
                         <CustomOverlay />
