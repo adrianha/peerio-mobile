@@ -22,7 +22,7 @@ import uiState from '../layout/ui-state';
 import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
-import { ListWithDrawer } from '../shared/list-with-drawer';
+import ListWithDrawer from '../shared/list-with-drawer';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 

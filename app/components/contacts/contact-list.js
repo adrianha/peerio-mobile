@@ -13,7 +13,7 @@ import PlusBorderIcon from '../layout/plus-border-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import uiState from '../layout/ui-state';
-import { ListWithDrawer } from '../shared/list-with-drawer';
+import ListWithDrawer from '../shared/list-with-drawer';
 
 const INITIAL_LIST_SIZE = 20;
 
