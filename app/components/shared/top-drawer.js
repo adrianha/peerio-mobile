@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { action, reaction, observable } from 'mobx';
+import { action, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, Animated } from 'react-native';
 import Text from '../controls/custom-text';
@@ -37,20 +37,15 @@ const iconStyle = {
 
 @observer
 export default class TopDrawer extends SafeComponent {
-    animated = new Animated.Value(0);
-    @observable hide = false;
+    animatedValue = new Animated.Value(0);
 
     componentDidMount() {
-        const duration = 500;
-        global.testAnimated = this.animated;
-        global.Animated = Animated;
+        const duration = 300;
         this.reaction = reaction(() => uiState.topDrawerVisible, visible => {
-            const toValue = visible ? vars.topDrawerHeight : 0;
-            Animated.timing(this.animated, {
+            const toValue = visible ? 1 : 0;
+            Animated.timing(this.animatedValue, {
                 toValue, duration
-            }).start(() => {
-                this.animated.setValue(toValue);
-            });
+            }).start();
         }, true);
     }
 
@@ -66,7 +61,16 @@ export default class TopDrawer extends SafeComponent {
     renderThrow() {
         const { heading, image, descriptionLine1, descriptionLine2, buttonText, buttonAction } = this.props;
         const outerContiner = {
-            height: this.animated,
+            height: this.animatedValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, vars.topDrawerHeight]
+            }),
+            transform: [
+                { translateY: this.animatedValue.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [-vars.topDrawerHeight, 0]
+                }) }
+            ],
             overflow: 'hidden'
         };
         const container = {
