@@ -7,6 +7,7 @@ import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import chatState from './chat-state';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class ChatSectionHeader extends SafeComponent {
@@ -30,11 +31,15 @@ export default class ChatSectionHeader extends SafeComponent {
         const action = collapsible ? () => { chatState[this.props.state] = !chatState[this.props.state]; } : null;
         return (
             <TouchableOpacity
+                {...testLabel(title)}
+                {...this.props}
                 pressRetentionOffset={vars.retentionOffset}
-                {...this.props} style={style} onPress={action} disabled={!collapsible}>
+                style={style}
+                onPress={action}
+                disabled={!collapsible}>
                 <Text semibold style={textStyle}>{title}</Text>
                 {collapsible &&
-                <Icon name={chatState[this.props.state] ? 'arrow-drop-down' : 'arrow-drop-up'} size={24} style={{ color: vars.txtDark }} />}
+                    <Icon name={chatState[this.props.state] ? 'arrow-drop-down' : 'arrow-drop-up'} size={24} style={{ color: vars.txtDark }} />}
             </TouchableOpacity>
         );
     }

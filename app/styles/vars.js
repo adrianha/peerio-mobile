@@ -75,6 +75,7 @@ const vars = {
     // Non-text
     black03: 'rgba(0, 0, 0, 0.03)',
     black05: 'rgba(0, 0, 0, 0.05)',
+    black07: 'rgba(0, 0, 0, 0.07)',
     black12: 'rgba(0, 0, 0, 0.12)',
     black25: 'rgba(0, 0, 0, 0.25)',
     black38: 'rgba(0, 0, 0, .38)',
@@ -106,6 +107,7 @@ const vars = {
     contactInviteSuggestionHeight: 64,
     popupPadding: scaleDim(20),
     popupHorizontalMargin: scaleDim(16),
+    tfaInputWidth: scaleDim(124),
 
     circle: 10,
     circleSize: 4,
@@ -155,7 +157,12 @@ const vars = {
     snackbarBgGreen: '#38CE86',
     snackbarHeight: 48,
     popupMinHeight: scaleDim(110),
+    settingsListPadding: 16,
     settingsItemHeight: 56,
+    largeSettingsItemHeight: 72,
+    accountSettingsIconColor: '#5461CC',
+    helpSettingsIconColor: '#A35EAA',
+    signoutSettingsButtonBg: 'rgba(255, 255, 255, .6)',
     headerBorderColor: 'rgba(0,0,0,.06)',
     folderRemoveNotifBg: 'rgba(0,0,0,.06)',
     folderRemoveNotifHeight: 95,

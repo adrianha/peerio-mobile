@@ -17,7 +17,6 @@ export default class Ghosts extends SafeComponent {
             rowHasChanged: (r1, r2) => r1 !== r2
         });
     }
-    get isFabVisible() { return true; }
 
     @observable dataSource = null;
     @observable refreshing = false;

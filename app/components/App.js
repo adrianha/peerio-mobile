@@ -12,7 +12,6 @@ import uiState from './layout/ui-state';
 import { clientApp, crypto, startSocket, config, User, TinyDb } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
-import { enableIdfa } from '../lib/idfa';
 import consoleOverride from '../lib/console-override';
 import '../lib/sounds';
 import './utils/bridge';
@@ -46,8 +45,6 @@ export default class App extends SafeComponent {
 
         consoleOverride.configureConsole().then(() => {
             startSocket();
-            push.clearBadge();
-            enableIdfa();
         });
     }
 

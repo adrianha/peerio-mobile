@@ -17,7 +17,6 @@ class RouterApp extends Router {
         routes.app = this;
         this.add('loading', LoadingScreen);
         this.add('loginStart', Login.Wizard);
-        this.add('loginSaved', Login.Saved);
         this.add('signupStep1', SignupWizard);
         this.add('loginAutomatic', LoginAutomatic);
         this.add('main', LayoutMain, true);

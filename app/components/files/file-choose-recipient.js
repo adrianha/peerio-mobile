@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import ContactListModal from '../contacts/contact-list-modal';
 import { t, tx } from '../utils/translator';
 import routes from '../routes/routes';
 import fileState from './file-state';
 
+@observer
 export default class FileChooseRecipient extends Component {
     render() {
         return (

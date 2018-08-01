@@ -3,7 +3,7 @@ import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import SettingsItem from './settings-item';
+import BasicSettingsItem from './basic-settings-item';
 import ToggleItem from './toggle-item';
 import { User, clientApp } from '../../lib/icebear';
 import { mainState, settingsState } from '../states';
@@ -39,16 +39,16 @@ export default class SettingsLevel2 extends SafeComponent {
     security = () => {
         return (
             <View style={bgStyle}>
-                <SettingsItem
+                <BasicSettingsItem
                     title="title_2FA"
                     onPress={() => settingsState.transition('twoFactorAuth')} />
-                {__DEV__ && <SettingsItem
+                {__DEV__ && <BasicSettingsItem
                     title="2FA prompt"
                     onPress={() => this.testTwoFactorAuthPrompt(false)} />}
-                {__DEV__ && <SettingsItem
+                {__DEV__ && <BasicSettingsItem
                     title="2FA prompt cancellable"
                     onPress={() => this.testTwoFactorAuthPrompt(true)} />}
-                <SettingsItem
+                <BasicSettingsItem
                     title="title_showAccountKey"
                     icon="visibility"
                     onPress={() => settingsState.showPassphrase()} />
@@ -60,7 +60,7 @@ export default class SettingsLevel2 extends SafeComponent {
     payments() {
         return (
             <View style={bgStyle}>
-                <SettingsItem
+                <BasicSettingsItem
                     title="test_payment"
                     onPress={() => payments.test()} />
             </View>
@@ -114,10 +114,10 @@ export default class SettingsLevel2 extends SafeComponent {
 
         return (
             <View style={bgStyle}>
-                <SettingsItem
+                <BasicSettingsItem
                     title={tx('title_notifications')}
                     onPress={() => settingsState.transition('notifications')} />
-                <SettingsItem
+                <BasicSettingsItem
                     title={tx('title_displayPreferences')}
                     onPress={() => settingsState.transition('display')} />
                 {/* <Text style={text}>{t('title_soundsDetail')}</Text> */}

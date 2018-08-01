@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { ScrollView, View, LayoutAnimation, Platform } from 'react-native';
-import { reaction } from 'mobx';
+import { action, reaction } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import popupState from './popup-state';
@@ -37,6 +37,11 @@ export default class PopupLayout extends SafeComponent {
                 testID={id} />
         );
     };
+
+    @action.bound scrollViewRef(sv) {
+        this.scrollView = sv;
+        uiState.currentScrollView = sv;
+    }
 
     renderThrow() {
         const popup = popupState.activePopup;
@@ -111,7 +116,11 @@ export default class PopupLayout extends SafeComponent {
 
         return (
             // scroll view so clicking outside of textboxes would close keyboard
-            <ScrollView scrollEnabled={false} style={popupNonAnimatedStyle} contentContainerStyle={contentContainerStyle}>
+            <ScrollView
+                ref={this.scrollViewRef}
+                scrollEnabled={false}
+                style={popupNonAnimatedStyle}
+                contentContainerStyle={contentContainerStyle}>
                 <View style={wrapper}>
                     <View style={container}>
                         <View style={{ padding: popup.noPadding ? 0 : vars.popupPadding, flexGrow: 1, flexShrink: 1 }}>

@@ -14,7 +14,7 @@ class ContactsPage extends Page {
     }
 
     get backButton() {
-        return this.getWhenVisible('~buttonChatBack');
+        return this.getWhenVisible('~buttonBackIcon');
     }
 
     get addContactButton() {

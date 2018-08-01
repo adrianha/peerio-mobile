@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { observer } from 'mobx-react/native';
 import Text from '../controls/custom-text';
 import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import chatState from './chat-state';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 
+@observer
 export default class ComposeMessage extends Component {
     exit = () => chatState.routerModal.discard();
     action = contacts => chatState.startChat(contacts);

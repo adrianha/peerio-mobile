@@ -65,10 +65,10 @@ class ContactState extends RoutedState {
 
     // if we have no contacts except User.current
     get empty() {
-        const { addedContacts, invitedContacts, contacts } = this.store;
+        const { addedContacts, invitedNotJoinedContacts, contacts } = this.store;
         return !contacts || (contacts.length <= 1
             && !contacts.filter(u => User.current.username !== u.username).length)
-            && !invitedContacts.length
+            && !invitedNotJoinedContacts.length
             && !addedContacts.length;
     }
 
@@ -234,8 +234,8 @@ class ContactState extends RoutedState {
     }
 
     // TODO replace with bulk
-    @action batchInvite(emails) {
-        emails.forEach((email) => this.store.inviteNoWarning(email));
+    @action batchInvite(emails, isAutoImport) {
+        emails.forEach((email) => this.store.inviteNoWarning(email, undefined, isAutoImport));
     }
 
     onTransition(active, contact) {

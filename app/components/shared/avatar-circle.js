@@ -29,15 +29,16 @@ export default class AvatarCircle extends SafeComponent {
         }
 
         const { color, tofuError, letter } = contact || {};
+        const tryColor = color || {};
         const coloredAvatarStyle = [avatarStyle, {
             overflow: 'hidden',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: color || 'gray'
+            backgroundColor: tryColor.value || 'gray'
         }];
         const avatarLetter = (
             <View style={coloredAvatarStyle}>
-                <Text style={{ color: 'white', textAlign: 'center', width: 14 * ratio, fontSize: vars.font.size.smaller * ratio }}>
+                <Text style={{ color: tryColor.isLight ? 'black' : 'white', textAlign: 'center', width: 14 * ratio, fontSize: vars.font.size.smaller * ratio }}>
                     {letter}
                 </Text>
             </View>

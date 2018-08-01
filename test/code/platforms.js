@@ -3,6 +3,7 @@ const { iOSBuildPath, androidBuildPath } = require('./buildPaths');
 const iOS = {
     port: 4723,
     desiredCapabilities: {
+        waitForQuiescence: false,
         platformName: 'iOS',
         platformVersion: process.env.PEERIO_IOS_VERSION,
         deviceName: process.env.PEERIO_IOS_SIM,

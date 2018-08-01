@@ -14,7 +14,7 @@ class ChatPage extends Page {
     }
 
     get buttonExitChat() {
-        return this.getWhenVisible('~buttonChatBack');
+        return this.getWhenVisible('~buttonBackIcon');
     }
 
     get addMembersButton() {
@@ -47,6 +47,14 @@ class ChatPage extends Page {
 
     chatWithTitle(selector) {
         return this.getWhenVisible(`~${selector}`);
+    }
+
+    get chatUnreadMessageIndicator() {
+        return this.getWhenPresent('~chatUnreadMessageIndicator');
+    }
+
+    get chatUnreadMessageIndicatorDisappeared() {
+        return this.waitToDisappear('~chatUnreadMessageIndicator');
     }
 
     get messageDmPlaceholder() {

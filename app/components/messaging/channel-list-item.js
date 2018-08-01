@@ -20,7 +20,7 @@ export default class ChannelListItem extends SafeComponent {
         if (chatState.collapseChannels) return null;
         const { chat, channelName } = this.props;
         if (!chat) return null;
-        const { name, unreadCount, headLoaded } = chat;
+        const { unreadCount, headLoaded } = chat;
         if (chat.isChannel && !headLoaded) return null;
 
         const containerStyle = {
@@ -57,7 +57,7 @@ export default class ChannelListItem extends SafeComponent {
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
-                    {...testLabel(name)}
+                    {...testLabel(channelName)}
                     onPress={this.onPress}
                     style={containerStyle}
                     pressRetentionOffset={vars.pressRetentionOffset}>

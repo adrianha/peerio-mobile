@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import Circle from './radio-button-circle';
 
+@observer
 export default class RadioButton extends SafeComponent {
     render() {
         const { onPress, isSelected, children } = this.props;

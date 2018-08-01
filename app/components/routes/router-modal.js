@@ -11,7 +11,6 @@ import FileChooseRecipient from '../files/file-choose-recipient';
 import ContactView from '../contacts/contact-view';
 import ChatInfo from '../messaging/chat-info';
 import ChannelInfo from '../messaging/channel-info';
-import PinModalAsk from '../controls/pin-modal-ask';
 import AccountUpgradeSwiper from '../settings/account-upgrade-swiper';
 import popupState from '../layout/popup-state';
 import routes from './routes';
@@ -34,7 +33,6 @@ class RouterModal extends Router {
         this.add('changeRecipient', FileChooseRecipient);
         this.add('moveFileTo', FileMove);
         this.add('contactView', ContactView);
-        this.add('askPin', PinModalAsk, true);
         this.add('chatInfo', ChatInfo);
         this.add('channelInfo', ChannelInfo);
         this.add('accountUpgradeSwiper', AccountUpgradeSwiper, true, true);

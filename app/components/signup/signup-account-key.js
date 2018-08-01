@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Clipboard, TouchableOpacity } from 'react-native';
-import ViewShot from 'react-native-view-shot';
 import Text from '../controls/custom-text';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
@@ -40,9 +39,17 @@ const textNormal = {
 };
 
 const accountKeyText = {
+    flexGrow: 1,
+    flexShrink: 1,
     color: vars.lighterBlackText,
     fontSize: vars.font.size.big,
     width: 224
+};
+
+const copyBtnContainer = {
+    alignSelf: 'center',
+    paddingLeft: vars.spacing.small.maxi2x,
+    paddingRight: vars.spacing.small.midi
 };
 
 const accountKeyRow = {
@@ -62,6 +69,16 @@ const accountKeyView = {
 
 @observer
 export default class SignupStep1 extends LoginWizardPage {
+    get formattedAccountKey() {
+        const stringLength = signupState.passphrase.length;
+        const stringMiddle = Math.ceil(stringLength / 2);
+        const firstLine = signupState.passphrase.substring(0, stringMiddle);
+        const secondLine = signupState.passphrase.substring(stringMiddle, stringLength);
+        const formatted = `${firstLine}\n${secondLine}`;
+
+        return formatted;
+    }
+
     copyAccountKey() {
         Clipboard.setString(signupState.passphrase);
         snackbarState.pushTemporary(t('title_copied'));
@@ -85,9 +102,9 @@ export default class SignupStep1 extends LoginWizardPage {
                     <Text style={smallText}>{tx('title_yourAccountKey')}</Text>
                     <View style={accountKeyRow}>
                         <Text bold {...testLabel('passphrase')} style={accountKeyText} selectable>
-                            {signupState.passphrase}
+                            {this.formattedAccountKey}
                         </Text>
-                        {buttons.blueTextButton(tx('button_copy'), this.copyAccountKey)}
+                        {buttons.blueTextButton(tx('button_copy'), this.copyAccountKey, null, null, null, copyBtnContainer)}
                     </View>
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>
@@ -98,7 +115,7 @@ export default class SignupStep1 extends LoginWizardPage {
     render() {
         return (
             <View style={container} onLayout={this._layout}>
-                <ViewShot ref={ref => { this._viewShot = ref; }}>
+                <View>
                     <View style={header2}>
                         <Text style={headingStyle2}>{tx('title_AccountKey')}</Text>
                     </View>
@@ -115,7 +132,7 @@ export default class SignupStep1 extends LoginWizardPage {
                             {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
                         </TouchableOpacity>
                     </View>
-                </ViewShot>
+                </View>
                 <View style={buttonRowStyle}>
                     {this.button('button_back', () => signupState.prev())}
                     {this.button('button_next', () => signupState.next(), false, !socket.connected)}

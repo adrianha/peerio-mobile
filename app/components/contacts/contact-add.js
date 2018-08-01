@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ScrollView, TouchableOpacity, LayoutAnimation, Share } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { View, ScrollView, TouchableOpacity, LayoutAnimation, Share, Platform } from 'react-native';
+import { observable, reaction, action } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
@@ -223,6 +223,15 @@ export default class ContactAdd extends SafeComponent {
         );
     }
 
+    @action.bound onChangeFindUserText(text) {
+        const { Version, OS } = Platform;
+        if (OS !== 'android' || Version > 22) {
+            this.query = text.toLowerCase();
+        } else {
+            this.query = text;
+        }
+    }
+
     renderThrow() {
         return (
             <View style={{ flex: 1, flexGrow: 1 }}>
@@ -244,7 +253,7 @@ export default class ContactAdd extends SafeComponent {
                                 <SimpleTextBox
                                     autoCorrect={false}
                                     autoCapitalize="none"
-                                    onChangeText={text => { this.query = text; }}
+                                    onChangeText={this.onChangeFindUserText}
                                     placeholder={tx('title_userSearch')}
                                     style={textinput}
                                     value={this.query}

@@ -17,6 +17,7 @@ export default class ReadReceipt extends SafeComponent {
     renderThrow() {
         const { avatarSize } = this.props;
         const { color, letter, mediumAvatarUrl } = this.contact;
+        const tryColor = color || {};
         const circleDiameter = avatarSize || 18;
         const circleStyle = {
             width: circleDiameter,
@@ -28,7 +29,7 @@ export default class ReadReceipt extends SafeComponent {
             alignItems: 'center'
         };
         const circleOnline = {
-            backgroundColor: color || '#ccc'
+            backgroundColor: tryColor.value || '#ccc'
         };
         const letterView = (
             <View style={[circleStyle, circleOnline]}>

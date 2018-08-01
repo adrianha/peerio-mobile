@@ -22,7 +22,7 @@ export default class MedcryptorSpaceScreen extends ChatList {
     }
 
     get leftIcon() {
-        return <BackIcon action={routes.main.chats} />;
+        return <BackIcon testID="buttonBackIcon" action={routes.main.chats} />;
     }
 
     get dataSource() {

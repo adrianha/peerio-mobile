@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import { TouchableOpacity } from 'react-native';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 
+@observer
 export default class CircleButtonWithIcon extends Component {
     render() {
         const iconStyle = {

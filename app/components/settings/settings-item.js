@@ -15,8 +15,8 @@ const itemContainerStyle = {
     alignItems: 'center',
     backgroundColor: 'white',
     paddingLeft: vars.spacing.small.maxi2x,
+    paddingVertical: vars.spacing.medium.mini2x,
     marginBottom: vars.spacing.small.mini,
-    minHeight: vars.settingsItemHeight,
     borderRadius: 4
 };
 
@@ -27,40 +27,50 @@ const descriptionStyle = {
 
 @observer
 export default class SettingsItem extends SafeComponent {
-    press() {
-        // console.log('settings-item.js: press');
-        this.props.onPress && this.props.onPress();
+    press() { this.props.onPress && this.props.onPress(); }
+
+    get leftComponent() {
+        return this.props.leftComponent !== null ?
+            this.props.leftComponent
+            : null;
     }
 
     get rightIcon() {
-        return this.props.icon !== null ?
-            icons.dark(this.props.icon || 'keyboard-arrow-right')
+        return this.props.rightIcon !== null ?
+            icons.darkNoPadding(this.props.rightIcon || 'keyboard-arrow-right', null,
+                { paddingLeft: vars.spacing.small.mini2x, paddingRight: vars.iconPadding })
             : null;
     }
 
     renderThrow() {
+        const { disabled, title, untappable, description, children, large, semibold } = this.props;
         const titleStyle = {
-            color: this.props.disabled ? vars.txtLightGrey : vars.txtDark,
-            fontSize: vars.font.size.normal
+            color: disabled ? vars.txtLightGrey : vars.txtDark,
+            fontSize: vars.font.size.bigger
         };
         const offset = vars.retentionOffset;
+        const height = large ? vars.largeSettingsItemHeight : vars.settingsItemHeight;
+        const marginLeft = this.leftComponent ? vars.spacing.huge.mini2x : 0;
         return (
             <TouchableOpacity
-                {...testLabel(this.props.title)}
-                activeOpacity={this.props.untappable ? 1 : 0.3}
+                {...testLabel(title)}
+                activeOpacity={untappable ? 1 : 0.3}
                 pressRetentionOffset={offset}
-                onPress={() => !this.props.untappable && !this.props.disabled && this.press()}>
-                <View style={[itemContainerStyle]} pointerEvents={this.props.untappable ? undefined : 'none'}>
-                    <View style={{ flexGrow: 1, flexShrink: 1 }}>
-                        <Text style={titleStyle}>
-                            {t(this.props.title)}
+                onPress={() => !untappable && !disabled && this.press()}>
+                <View style={[itemContainerStyle, { height }]} pointerEvents={untappable ? undefined : 'none'}>
+                    <View style={{ flexGrow: 1, flexShrink: 1, marginLeft }}>
+                        <Text semibold={semibold} style={titleStyle}>
+                            {t(title)}
                         </Text>
-                        {!!this.props.description && <Text style={descriptionStyle}>
-                            {this.props.description}
+                        {!!description && <Text style={descriptionStyle}>
+                            {description}
                         </Text>}
                     </View>
-                    <View style={{ flex: 0 }}>
-                        {this.props.children}
+                    <View style={{ position: 'absolute', left: 0, flex: 0 }}>
+                        {this.leftComponent}
+                    </View>
+                    <View style={{ flex: 0, justifyContent: 'center' }}>
+                        {children}
                     </View>
                     <View style={{ flex: 0 }}>
                         {this.rightIcon}
@@ -77,6 +87,7 @@ SettingsItem.propTypes = {
     description: PropTypes.any,
     disabled: PropTypes.bool,
     untappable: PropTypes.bool,
-    icon: PropTypes.string,
+    rightIcon: PropTypes.any,
+    leftComponent: PropTypes.any,
     onPress: PropTypes.any
 };

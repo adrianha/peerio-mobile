@@ -42,7 +42,7 @@ export default {
         );
     },
 
-    blueTextButton(text, onPress, disabled, hidden, accessibilityId) {
+    blueTextButton(text, onPress, disabled, hidden, accessibilityId, style) {
         const opacity = hidden ? 0.0 : 1.0;
         const buttonStyle = {
             paddingRight: vars.spacing.small.maxi2x,
@@ -55,7 +55,7 @@ export default {
                     disabled={disabled}
                     onPress={disabled ? null : onPress}
                     pressRetentionOffset={vars.pressRetentionOffset}
-                    style={buttonStyle}>
+                    style={[buttonStyle, style]}>
                     <Text bold style={{ color: disabled ? vars.txtMedium : vars.peerioBlue }}>
                         {tu(text)}
                     </Text>

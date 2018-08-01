@@ -172,8 +172,8 @@ class World {
         await this.loginPage.hideKeyboardHelper();
         await this.loginPage.submitButton.click();
 
-        await this.seeWelcomeScreen();
         await this.dismissEmailConfirmationPopup();
+        await this.seeWelcomeScreen();
     }
 
     // username is optional

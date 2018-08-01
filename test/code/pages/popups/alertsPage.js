@@ -3,9 +3,8 @@ const Page = require('../page');
 class AlertsPage extends Page {
     async dismissNotificationsAlert() {
         try {
-            if (await this.app.alertText()) {
-                await this.app.alertAccept();
-            }
+            await this.app.waitForExist('~Allow', 5000);
+            await this.app.click('~Allow');
         } catch (e) {
             // No push alert present
         }

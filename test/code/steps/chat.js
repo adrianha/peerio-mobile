@@ -31,8 +31,14 @@ defineSupportCode(({ When, Then }) => {
         await this.chatPage.buttonSendMessage.click();
     });
 
+    Then('I send several messages to the current chat', async function () {
+        await this.chatPage.buttonUploadToChat.click();
+        await this.fileUploadPage.uploadFileFromGallery();
+        await this.filesListPage.fileSharePreviewPopup.click();
+    });
+
     Then('I scroll down the chat list', async function () {
-        await this.chatListPage.scrollDownHelper();  // eslint-disable-line
+        await this.chatListPage.scrollDownHelper();
     });
 
     Then('I press the top unread message indicator', async function () {
@@ -49,6 +55,23 @@ defineSupportCode(({ When, Then }) => {
 
     Then('I can see the bottom unread chat', async function () {
         await this.chatListPage.chatWithTitleIsVisible(process.env.BOTTOMUNREADINDICATOR_TEST_USER);
+    });
+
+    Then('I can open a chat with {word}', async function (string) {
+        await this.chatListPage.chatWithTitle(string).click();
+    });
+
+    Then('I scroll up the chat', async function () {
+        await this.app.pause(5000); // wait till chat loads
+        await this.chatPage.testAction2();
+    });
+
+    Then('I click the chat unread message indicator', async function () {
+        await this.chatPage.chatUnreadMessageIndicator.click();
+    });
+
+    Then('I can no longer see the unread message indicator', async function () {
+        await this.chatPage.chatUnreadMessageIndicatorDisappeared;
     });
 
     Then('They can send a message to the current chat', async function () {

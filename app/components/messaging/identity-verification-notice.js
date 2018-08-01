@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
 import { T } from '../utils/translator';
 
+@observer
 export default class IdentityVerificationNotice extends Component {
     securityIcon = {
         margin: vars.spacing.small.mini,

@@ -20,7 +20,7 @@ export default class MedcryptorChannelInvite extends ChannelInvite {
     get invitation() { return invitationState.currentInvitation; }
 
     get leftIcon() {
-        return <BackIcon action={() => backFromChat(this.invitation)} />;
+        return <BackIcon testID="buttonBackIcon" action={() => backFromChat(this.invitation)} />;
     }
 
     get inviteText() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import { observer } from 'mobx-react/native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import RadioButton from './radio-button';
@@ -12,6 +13,7 @@ const radioText = {
     paddingBottom: 4
 };
 
+@observer
 export default class RadioGroup extends SafeComponent {
     constructor(props) {
         super(props);

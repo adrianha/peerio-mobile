@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import { View, TextInput, Platform } from 'react-native';
 import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
@@ -32,6 +33,7 @@ const placeholderStyle = {
     fontSize
 };
 
+@observer
 export default class SearchBar extends Component {
     render() {
         const { textValue, placeholderText, onChangeText, onSubmit, leftIcon, rightIcon, testId } = this.props;

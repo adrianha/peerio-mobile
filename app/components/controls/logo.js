@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import { Image, Dimensions, TouchableOpacity } from 'react-native';
 import Center from './center';
 import { branding, vars } from '../../styles/styles';
@@ -9,6 +10,7 @@ const origHeight = 472;
 const width = Dimensions.get('window').width - 100;
 const height = width / origWidth * origHeight;
 
+@observer
 export default class Logo extends Component {
     render() {
         const { logo } = branding;

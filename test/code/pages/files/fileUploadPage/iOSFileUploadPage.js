@@ -2,7 +2,7 @@ const Page = require('../../page');
 
 class iOSFileUploadPage extends Page {
     async uploadFileFromGallery() {
-        await this.app.element('~Choose from gallery').click(); // by accessibility id
+        await this.app.element('~Upload from gallery').click(); // by accessibility id
 
         // Wait for permission to show up
         await this.app.pause(3000);

@@ -40,6 +40,13 @@ class Page {
             .click('~endScroll');
     }
 
+    testAction2() {
+        return this.app
+            .waitForExist('~testAction2')
+            .waitForVisible('~testAction2')
+            .click('~testAction2');
+    }
+
     // Check if element exists, not necessarily visible
     checkIfPresent(selector, timeout) {
         return this.app.isExisting(selector, timeout);
@@ -91,6 +98,11 @@ class Page {
             .waitForVisible(container)
             .element(container)
             .isExisting(element);
+    }
+
+    waitToDisappear(selector) {
+        return this.app
+            .waitForVisible(selector, 1500, true);
     }
 }
 

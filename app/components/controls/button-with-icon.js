@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Text from '../controls/custom-text';
@@ -16,9 +17,10 @@ const containerStyle = {
     alignItems: 'center'
 };
 
+@observer
 export default class ButtonWithIcon extends Component {
     render() {
-        const { textStyle } = this.props;
+        const { textStyle, color } = this.props;
         const opacity = { opacity: this.props.disabled ? 0.5 : 1 };
         const text = this.props.text || '';
         const press = () => {
@@ -36,7 +38,7 @@ export default class ButtonWithIcon extends Component {
                         style={{ paddingHorizontal: 7 }}
                         name={this.props.iconName}
                         size={vars.iconSize}
-                        color="gray"
+                        color={color || 'gray'}
                     />
                     <Text bold={this.props.bold} style={[{ color: vars.highlight }, defaultTextStyle, textStyle, opacity]}>
                         {text}

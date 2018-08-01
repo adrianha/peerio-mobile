@@ -100,7 +100,6 @@ export default class LoginClean extends LoginWizardPage {
                                 hint={tx('title_AccountKey')}
                                 onSubmit={this.submit}
                                 secureText
-                                lowerCase
                                 returnKeyType="go"
                                 ref={this.passwordInputRef}
                                 testID="usernamePassword"
