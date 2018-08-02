@@ -12,6 +12,7 @@ import LoginWizardPage, {
 } from '../login/login-wizard-page';
 import { formStyle, titleDark, textNormal } from '../../styles/signup-contact-sync';
 import { popupContactPermission } from '../shared/popups';
+import { clientApp } from '../../lib/icebear';
 
 const imageDiscoverNetwork = require('../../assets/discover-network.png');
 
@@ -30,12 +31,18 @@ export default class SignupContactSyncStart extends LoginWizardPage {
     }
 
     @action.bound async syncContacts() {
-        const result = await popupContactPermission(tx('title_permissionContacts'), tx('title_permissionContactsDescroption'));
-        if (result) {
-            const hasPermissions = await contactState.hasPermissions();
-            if (!hasPermissions) signupState.finishSignUp();
+        const hasPermissions =
+            await popupContactPermission(tx('title_permissionContacts'), tx('title_permissionContactsDescroption'))
+            && await contactState.hasPermissions();
+        if (hasPermissions) {
+            // user has chosen to auto import contacts
+            clientApp.uiUserPrefs.importContactsInBackground = true;
             signupState.next();
-        } else signupState.finishSignUp();
+        } else {
+            // user has not given permission to access contacts
+            clientApp.uiUserPrefs.importContactsInBackground = false;
+            signupState.finishSignUp();
+        }
     }
 
     render() {

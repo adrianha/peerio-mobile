@@ -18,7 +18,8 @@ class PreferenceStore {
         externalContentEnabled: true,
         externalContentJustForFavs: false,
         peerioContentEnabled: true,
-        showMoveSharedFolderPopup: true
+        showMoveSharedFolderPopup: true,
+        importContactsInBackground: false
     };
 
     observePreference(key, dbName, localStore) {

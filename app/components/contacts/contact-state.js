@@ -2,7 +2,7 @@ import { DeviceEventEmitter, NativeEventEmitter } from 'react-native';
 import { observable, action, when } from 'mobx';
 import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
-import { contactStore, warnings, User } from '../../lib/icebear';
+import { clientApp, contactStore, warnings, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import contactAddState from './contact-add-state';
 import chatState from '../messaging/chat-state';
@@ -10,13 +10,16 @@ import chatState from '../messaging/chat-state';
 class ContactState extends RoutedState {
     _prefix = 'contacts';
     @observable store = contactStore;
+    @observable initialPhoneScan = false;
     _permissionHandler = null;
 
     @action async init() {
-        return new Promise(resolve => when(() => !this.store.loading, () => {
-            RNContacts.subscribeToUpdates(() => {});
-            resolve();
-        }));
+        when(() => clientApp.uiUserPrefs.importContactsInBackground && this.initialPhoneScan, () => {
+            RNContacts.subscribeToUpdates(() => {
+                console.log(`contact-store.js: subscribed to updates`);
+            });
+        });
+        this.emails = await this.getAllNewEmailsFromPhone();
     }
 
     @action exit() {
@@ -150,6 +153,18 @@ class ContactState extends RoutedState {
         }));
     }
 
+    async getAllNewEmailsFromPhone() {
+        const contacts = this._cachedPhoneContacts || await this.getPhoneContacts();
+        const result = [];
+        contacts.forEach(contact => {
+            const { emailAddresses } = contact;
+            if (emailAddresses) {
+                emailAddresses.forEach(ea => result.push(ea));
+            }
+        });
+        return result;
+    }
+
     @action async testImport() {
         const hasPermissions = await this.hasPermissions();
         if (!hasPermissions) {
@@ -162,13 +177,10 @@ class ContactState extends RoutedState {
         const hash = {};
         contacts.forEach(contact => {
             const { givenName, familyName, emailAddresses } = contact;
-            const display = `contact-state.js: processing ${givenName} ${familyName}`;
-            console.log(display);
             if (emailAddresses) {
                 emailAddresses.forEach(ea => {
                     const { email } = ea;
                     if (email) {
-                        console.log(`${email}: ${givenName} ${familyName}`);
                         emails.push(email);
                         hash[email] = observable({
                             givenName,
@@ -183,7 +195,7 @@ class ContactState extends RoutedState {
                 });
             }
         });
-        // emails = ['seavan@gmail.com'];
+
         this.store.importContacts(emails)
             .then(success => {
                 console.log('contact-state.js: import success');
