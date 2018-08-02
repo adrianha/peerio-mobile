@@ -36,6 +36,8 @@ class PreferenceStore {
     }
 
     init() {
+        if (this.loaded) return;
+        this.loaded = true;
         Object.keys(this.prefs).forEach((key) => {
             this.observePreference(key, 'user', this.prefs);
         });

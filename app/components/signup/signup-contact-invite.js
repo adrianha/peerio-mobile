@@ -67,7 +67,7 @@ export default class SignupContactInvite extends LoginWizardPage {
         this.inProgress = true;
         try {
             const phoneContacts = await contactState.getPhoneContactEmails();
-            console.log(`got plugin info`);
+            console.log(`got phoneContacts ${phoneContacts.length}`);
             await this.getNonPeerioContacts(phoneContacts);
             console.log(`got contact list`);
         } catch (e) {

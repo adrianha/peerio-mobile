@@ -1,8 +1,8 @@
 import { DeviceEventEmitter, NativeEventEmitter } from 'react-native';
-import { observable, action, when } from 'mobx';
+import { observable, action } from 'mobx';
 import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
-import { clientApp, contactStore, warnings, User } from '../../lib/icebear';
+import { clientApp, contactStore, warnings, User, config } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import contactAddState from './contact-add-state';
 import chatState from '../messaging/chat-state';
@@ -10,16 +10,40 @@ import chatState from '../messaging/chat-state';
 class ContactState extends RoutedState {
     _prefix = 'contacts';
     @observable store = contactStore;
-    @observable initialPhoneScan = false;
     _permissionHandler = null;
 
     @action async init() {
-        when(() => clientApp.uiUserPrefs.importContactsInBackground && this.initialPhoneScan, () => {
-            RNContacts.subscribeToUpdates(() => {
-                console.log(`contact-store.js: subscribed to updates`);
-            });
+        // TODO: rewrite
+        if (this.importContactsInBackground) {
+            clientApp.uiUserPrefs.importContactsInBackground = this.importContactsInBackground;
+        }
+        if (!clientApp.uiUserPrefs.importContactsInBackground) return;
+        this.cache = new config.CacheEngine('general_cache', 'id');
+        await this.cache.open();
+        // if we already ran import, do not reinvite existing contacts
+        // and do not reinitialize cache
+        this.importedEmails = this.importedEmails || await this.cache.getValue('imported_emails') || {};
+        console.log(`loaded cached imported emails: ${Object.keys(this.importedEmails).length}`);
+        await this.syncCachedEmails();
+        RNContacts.subscribeToUpdates(() => {
+            console.log(`contact-store.js: subscribed to updates`);
         });
-        this.emails = await this.getAllNewEmailsFromPhone();
+    }
+
+    @action.bound async syncCachedEmails() {
+        const time = Date.now();
+        const emails = await this.getPhoneContactEmails();
+        console.log(`got contacts in background: ${emails.length}, ${Date.now() - time}ms`);
+        const newEmails = [];
+        emails.forEach(({ email }) => {
+            if (this.importedEmails[email]) return;
+            this.importedEmails[email] = email;
+            newEmails.push(email);
+            console.log(`got new email to import: ${email}`);
+        });
+        this.batchInvite(newEmails, true);
+        await this.cache.setValue('imported_emails', this.importedEmails);
+        console.log(`synced new email cache ${Object.keys(this.importedEmails).length}`);
     }
 
     @action exit() {
@@ -153,18 +177,6 @@ class ContactState extends RoutedState {
         }));
     }
 
-    async getAllNewEmailsFromPhone() {
-        const contacts = this._cachedPhoneContacts || await this.getPhoneContacts();
-        const result = [];
-        contacts.forEach(contact => {
-            const { emailAddresses } = contact;
-            if (emailAddresses) {
-                emailAddresses.forEach(ea => result.push(ea));
-            }
-        });
-        return result;
-    }
-
     @action async testImport() {
         const hasPermissions = await this.hasPermissions();
         if (!hasPermissions) {
@@ -226,6 +238,7 @@ class ContactState extends RoutedState {
      */
     @action async getPhoneContactEmails() {
         const phoneContacts = await this.getPhoneContacts();
+        const time = Date.now();
         const contactEmails = [];
         phoneContacts.forEach(phoneContact => {
             const { emailAddresses, givenName, familyName } = phoneContact;
@@ -236,6 +249,7 @@ class ContactState extends RoutedState {
                 });
             }
         });
+        console.log(`parsed contacts in ${Date.now() - time}ms`);
         return contactEmails;
     }
 
@@ -250,7 +264,11 @@ class ContactState extends RoutedState {
 
     // TODO replace with bulk
     @action batchInvite(emails, isAutoImport) {
-        emails.forEach((email) => this.store.inviteNoWarning(email, undefined, isAutoImport));
+        emails.forEach((email) => {
+            if (!this.importedEmails) this.importedEmails = {};
+            this.importedEmails[email] = email;
+            this.store.inviteNoWarning(email, undefined, isAutoImport);
+        });
     }
 
     onTransition(active, contact) {
@@ -275,6 +293,9 @@ DeviceEventEmitter.addListener(`ContactPermissionsGranted`, data => {
 const emitter = new NativeEventEmitter(RNContacts);
 emitter.addListener(`ContactsChanged`, () => {
     console.log(`contact-state.js: contacts changed`);
+    contactState.syncCachedEmails();
 });
+
+global.contactState = contactState;
 
 export default contactState;
