@@ -1,4 +1,4 @@
-import { DeviceEventEmitter } from 'react-native';
+import { DeviceEventEmitter, NativeEventEmitter } from 'react-native';
 import { observable, action, when } from 'mobx';
 import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
@@ -13,7 +13,10 @@ class ContactState extends RoutedState {
     _permissionHandler = null;
 
     @action async init() {
-        return new Promise(resolve => when(() => !this.store.loading, resolve));
+        return new Promise(resolve => when(() => !this.store.loading, () => {
+            RNContacts.subscribeToUpdates(() => {});
+            resolve();
+        }));
     }
 
     @action exit() {
@@ -257,5 +260,9 @@ DeviceEventEmitter.addListener(`ContactPermissionsGranted`, data => {
     contactState.resolvePermissionHandler(data);
 });
 
+const emitter = new NativeEventEmitter(RNContacts);
+emitter.addListener(`ContactsChanged`, () => {
+    console.log(`contact-state.js: contacts changed`);
+});
 
 export default contactState;

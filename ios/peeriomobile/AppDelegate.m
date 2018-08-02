@@ -16,9 +16,11 @@
 #import <UserNotifications/UserNotifications.h>
 #import <Contacts/Contacts.h>
 
+CNContactStore* contactStore = nil;
+
 @implementation AppDelegate
 
-ABAddressBookRef _addressBook;
+/* ABAddressBookRef _addressBook;
 
 void RogerAddressBookChangeCallback(ABAddressBookRef addressBook, CFDictionaryRef info, void *context) {
     NSLog(@"Address book change");
@@ -35,7 +37,7 @@ void RogerAddressBookChangeCallback(ABAddressBookRef addressBook, CFDictionaryRe
         int seconds = round(distanceBetweenDates);
 
         if(seconds < 60) {
-            NSLog(@"modifactiondate: %@", datemod);
+            // NSLog(@"modifactiondate: %@", datemod);
         }
     }
 
@@ -45,12 +47,7 @@ void RogerAddressBookChangeCallback(ABAddressBookRef addressBook, CFDictionaryRe
     // ABAddressBookRevert(addressBook);
     // RogerAddressBook *instance = (__bridge RogerAddressBook *)context;
     // [instance import];
-}
-
-- (void)userContactsChange:(NSNotification*)note
-{
-     NSLog(@"Change in contacts!");
-}
+} */
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -74,17 +71,18 @@ void RogerAddressBookChangeCallback(ABAddressBookRef addressBook, CFDictionaryRe
   [self.window makeKeyAndVisible];
   
   // Set up address book API.
-  CFErrorRef *error = NULL;
+  /* CFErrorRef *error = NULL;
   _addressBook = ABAddressBookCreateWithOptions(NULL, error);
   if (error) {
       NSLog(@"Could not initialize address book: %@", CFBridgingRelease(CFErrorCopyFailureReason(*error)));
   } else {
       ABAddressBookRegisterExternalChangeCallback(_addressBook, RogerAddressBookChangeCallback, (__bridge void *)self);
       NSLog(@"Registered callback");
-  }
+  } */
+  /* contactStore = [[CNContactStore alloc] init];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                   selector:@selector(userContactsChange:)
-             name:CNContactStoreDidChangeNotification object:nil];
+             name:CNContactStoreDidChangeNotification object:nil]; */
 
   return YES;
 }
