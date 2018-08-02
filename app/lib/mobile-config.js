@@ -23,16 +23,15 @@ export default (c, icebear, tm) => {
 
     // Telemetry
     const { S } = tm;
-    const sendViewLink = (event) => helpers.send(tm, event);
+    const tmSendEvent = (event) => helpers.send(tm, event);
 
     cfg.translator.urlMap = {
         fingerprint: {
-            link: whitelabel.FINGERPRINT || 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
-            name: 'fingerprint'
+            link: whitelabel.FINGERPRINT || 'https://peerio.zendesk.com/hc/en-us/articles/204394135'
         },
         mpDetail: {
             link: whitelabel.MP_DETAIL || 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
-            tracker: () => sendViewLink([S.VIEW_LINK, { item: S.WHERE_ACCOUNT_KEY }])
+            tracker: () => tmSendEvent([S.VIEW_LINK, { item: S.WHERE_ACCOUNT_KEY }])
         },
         tfaDetail: {
             link: whitelabel.TFA_DETAIL || 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-'
@@ -47,7 +46,8 @@ export default (c, icebear, tm) => {
             link: 'route:modal:createChannel'
         },
         signup: {
-            link: 'route:app:signupStep1'
+            link: 'route:app:signupStep1',
+            tracker: () => tmSendEvent([S.START_ACCOUNT_CREATION, { text: S.SIGN_UP, sublocation: S.SIGN_IN }])
         },
         settings: {
             link: 'route:main:settings'

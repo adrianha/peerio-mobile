@@ -77,7 +77,7 @@ export default class LoginClean extends LoginWizardPage {
                 if (e.deleted || e.blacklisted) {
                     errorMessage = 'error_accountSuspendedTitle';
                 }
-                this.passwordInput.setCustomError(tx(errorMessage));
+                this.passwordInput.setCustomError(errorMessage);
             });
     }
 

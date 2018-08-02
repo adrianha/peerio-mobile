@@ -63,8 +63,8 @@ export default class StyledTextInput extends SafeComponent {
      */
     @action.bound setCustomError(error) {
         this.valid = INVALID;
-        this.errorMessageText = error;
-        tm.shared.styledTextInputOnError(this.props.label, this.errorMessageText);
+        this.errorMessageText = tx(error);
+        tm.shared.styledTextInputOnError(this.props.label, error);
     }
 
     // Checks if text field is empty and validates accordingly

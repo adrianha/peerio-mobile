@@ -41,7 +41,7 @@ export default class SignupContactSyncStart extends LoginWizardPage {
     @action.bound async syncContacts() {
         tm.signup.syncContacts();
         const result = await popupContactPermission(tx('title_permissionContacts'), tx('title_permissionContactsDescroption'));
-        tm.signup.contactPermissionDialog(result);
+        tm.signup.contactPermissionDialog(result, TmHelper.currentRoute);
         if (result) {
             const hasPermissions = await contactState.hasPermissions();
             if (!hasPermissions) signupState.finishSignUp();

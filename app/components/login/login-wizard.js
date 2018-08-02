@@ -27,7 +27,7 @@ export default class LoginWizard extends Wizard {
     loginStart = () => {
         return (<LoginStart
             login={() => {
-                tm.login.onLoginClick();
+                tm.login.onNavigateLogin();
                 this.changeIndex(1);
             }}
         />);

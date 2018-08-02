@@ -29,6 +29,12 @@ const login = setup(
             ];
         },
 
+        onNavigateLogin: () => {
+            return [
+                S.NAVIGATE, { option: S.SIGN_IN }
+            ];
+        },
+
         onLoginClick: () => {
             return [
                 S.SIGN_IN, { text: S.SIGN_IN }

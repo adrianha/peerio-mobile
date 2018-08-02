@@ -14,14 +14,18 @@ const shared = setup({
         return textInput(label, null, TmHelper.currentRoute, S.IN_FOCUS);
     },
 
+    // Used to send errors when input is blurred
     styledTextInputOnBlur: (label, errorMsg) => {
-        if (errorMsg === 'error_usernameNotAvailable') return null;
-        return textInput(label, null, TmHelper.currentRoute, S.ERROR, errorMsg);
+        let errorMessage = errorMsg;
+        if (!errorMsg) return null; // Do not send error event if there is not error message
+        if (errorMsg === 'error_usernameNotAvailable') return null; // Do not track this error here
+        if (errorMsg === 'error_invalidName') errorMessage = 'Not allowed'; // More presentable on Telemetry
+        return textInput(label, null, TmHelper.currentRoute, S.ERROR, errorMessage);
     },
 
-    // We need to send the Username Not Available error whenever it occurs
+    // Used to send errors when error occurs
     styledTextInputOnError: (label, errorMsg) => {
-        if (errorMsg !== 'error_usernameNotAvailable') return null;
+        if (errorMsg !== 'error_usernameNotAvailable' && errorMsg !== 'error_wrongAK') return null;
         return textInput(label, null, TmHelper.currentRoute, S.ERROR, errorMsg);
     },
 

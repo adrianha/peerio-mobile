@@ -5,6 +5,7 @@ import SafeComponent from '../shared/safe-component';
 import { crypto } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import ActionSheetLayout from '../layout/action-sheet-layout';
+import tm from '../../telemetry';
 
 const { b64ToBytes } = crypto.cryptoUtil;
 
@@ -55,6 +56,7 @@ async function pickCrop(camera, onSave) {
         mediaType: 'photo',
         cropping: true
     });
+    if (data) tm.signup.addPhoto();
     console.debug(data);
     onSave(await generateResize(data.path));
 }

@@ -92,11 +92,6 @@ export default class SignupStep1 extends LoginWizardPage {
         return formatted;
     }
 
-    addPhoto() {
-        tm.signup.addPhoto();
-        SignupAvatarActionSheet.show();
-    }
-
     copyAccountKey() {
         tm.signup.copy();
         Clipboard.setString(signupState.passphrase);
@@ -155,7 +150,7 @@ export default class SignupStep1 extends LoginWizardPage {
                             </View>
                         </View>
                         <TouchableOpacity
-                            onPress={this.addPhoto}
+                            onPress={SignupAvatarActionSheet.show}
                             pressRetentionOffset={vars.pressRetentionOffset}
                             style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
                             {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}

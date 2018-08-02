@@ -128,11 +128,6 @@ export default class SignupStep1 extends LoginWizardPage {
         !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
     }
 
-    addPhoto() {
-        tm.signup.addPhoto();
-        SignupAvatarActionSheet.show();
-    }
-
     get avatar() {
         return (
             <SignupAvatar />
@@ -220,7 +215,7 @@ export default class SignupStep1 extends LoginWizardPage {
                         </View>
                         <TouchableOpacity
                             style={circleTopSmall}
-                            onPress={this.addPhoto}
+                            onPress={SignupAvatarActionSheet.show}
                             pressRetentionOffset={vars.pressRetentionOffset}>
                             {signupState.avatarData ? this.avatar : this.avatarSelector}
                         </TouchableOpacity>
