@@ -72,7 +72,7 @@ const signup = setup(
         },
 
         akConfirmed: () => {
-            return textInput(S.AK_CONFIRMATION, null, TmHelper.currentRoute, S.IN_FOCUS);
+            return textInput(S.AK_CONFIRMATION, null, TmHelper.currentRoute, S.CONFIRMED);
         },
 
         syncContacts: () => {
