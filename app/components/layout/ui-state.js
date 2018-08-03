@@ -9,7 +9,6 @@ import RoutedState from '../routes/routed-state';
 const { height } = Dimensions.get('window');
 
 class UIState extends RoutedState {
-    @observable topDrawerDismissed = false; // don't use this, use uiState.topDrawerVisible
     @observable actionSheetShown = false;
     @observable fileUpdateProgress = 0; // TODO remove when fileState progress is wired
     @observable isFirstLogin = false;
@@ -37,6 +36,13 @@ class UIState extends RoutedState {
         // ru: `Russian`
     };
 
+    // Don't use this in related components, use uiState.topDrawerVisible
+    @observable topDrawerDismissed = false;
+
+    // Used to control the animation
+    @observable showTopDrawer = false;
+
+    // Triggers show and hide animation start
     get topDrawerVisible() {
         return !this.topDrawerDismissed && (this.keyboardHeight === 0);
     }

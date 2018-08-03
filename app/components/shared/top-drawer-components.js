@@ -11,7 +11,7 @@ const MAINTENANCE_DAY = 'May 15';
 const MAINTENANCE_TIME1 = '2 AM';
 const MAINTENANCE_TIME2 = '5 AM';
 
-function topDrawerMaintenance() {
+function topDrawerMaintenance(onShowTopDrawer, onHideTopDrawer) {
     return (<TopDrawer
         heading={tx('title_scheduledMaintenance')}
         image={icons.imageIcon(require('../../assets/info-icon.png'), vars.iconSizeMedium2x)}
@@ -22,11 +22,13 @@ function topDrawerMaintenance() {
             time2: MAINTENANCE_TIME2
         })}
         buttonText={tx('title_readMore')}
-        buttonAction={() => console.log('open link')}
+        buttonAction={() => console.log('open link')} // TODO fix link
+        onShowTopDrawer={onShowTopDrawer}
+        onHideTopDrawer={onHideTopDrawer}
     />);
 }
 
-function topDrawerNewContact(contact) {
+function topDrawerNewContact(onShowTopDrawer, onHideTopDrawer, contact) {
     return (<TopDrawer
         heading={tx('title_newContactHeading')}
         image={<View style={{ padding: vars.spacing.small.maxi2x }}>
@@ -38,6 +40,8 @@ function topDrawerNewContact(contact) {
         })}
         buttonText={tx('button_startChat')}
         buttonAction={() => chatState.startChat([contact])}
+        onShowTopDrawer={onShowTopDrawer}
+        onHideTopDrawer={onHideTopDrawer}
     />);
 }
 

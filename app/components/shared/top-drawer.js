@@ -40,12 +40,9 @@ export default class TopDrawer extends SafeComponent {
     animatedValue = new Animated.Value(0);
 
     componentDidMount() {
-        const duration = 300;
         this.reaction = reaction(() => uiState.topDrawerVisible, visible => {
-            const toValue = visible ? 1 : 0;
-            Animated.timing(this.animatedValue, {
-                toValue, duration
-            }).start();
+            if (visible) setTimeout(() => this.props.onShowTopDrawer(), 1000);
+            else setTimeout(() => this.props.onHideTopDrawer(), 1000);
         }, true);
     }
 
@@ -60,19 +57,7 @@ export default class TopDrawer extends SafeComponent {
 
     renderThrow() {
         const { heading, image, descriptionLine1, descriptionLine2, buttonText, buttonAction } = this.props;
-        const outerContiner = {
-            height: this.animatedValue.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, vars.topDrawerHeight]
-            }),
-            transform: [
-                { translateY: this.animatedValue.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [-vars.topDrawerHeight, 0]
-                }) }
-            ],
-            overflow: 'hidden'
-        };
+        if (!uiState.showTopDrawer) return null;
         const container = {
             backgroundColor: 'white',
             alignItems: 'center',
@@ -81,7 +66,7 @@ export default class TopDrawer extends SafeComponent {
             borderBottomWidth: 1
         };
         return (
-            <Animated.View style={outerContiner}>
+            <View style={{ overflow: 'hidden' }}>
                 <View style={container}>
                     <Text semibold style={headingStyle}>{heading}</Text>
                     {image}
@@ -94,7 +79,7 @@ export default class TopDrawer extends SafeComponent {
                         {icons.darkNoPadding('close', this.onClose)}
                     </View>
                 </View>
-            </Animated.View>
+            </View>
         );
     }
 }
@@ -105,5 +90,7 @@ TopDrawer.PropTypes = {
     descriptionLine1: PropTypes.string.isRequired,
     descriptionLine2: PropTypes.string,
     buttonText: PropTypes.string.isRequired,
-    buttonAction: PropTypes.func
+    buttonAction: PropTypes.func,
+    onShowTopDrawer: PropTypes.any,
+    onHideTopDrawer: PropTypes.any
 };
