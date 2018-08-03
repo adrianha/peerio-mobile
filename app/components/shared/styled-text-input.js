@@ -63,7 +63,7 @@ export default class StyledTextInput extends SafeComponent {
      */
     @action.bound setCustomError(error) {
         this.valid = INVALID;
-        this.errorMessageText = tx(error);
+        this.errorMessageText = error;
         tm.shared.styledTextInputOnError(this.props.label, error);
     }
 
@@ -79,7 +79,7 @@ export default class StyledTextInput extends SafeComponent {
                 }
                 if (required && this.isDirty) {
                     this.valid = INVALID;
-                    this.errorMessageText = tx('title_required');
+                    this.errorMessageText = 'error_fieldRequired';
                 }
             }
         } catch (error) {
@@ -174,7 +174,7 @@ export default class StyledTextInput extends SafeComponent {
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
         this.blurAnimation();
-        tm.shared.styledTextInputOnBlur(this.props.label, this.errorMessageText);
+        if (this.valid === INVALID) tm.shared.styledTextInputOnBlur(this.props.label, this.errorMessageText);
     }
 
     @action.bound onFocus() {
